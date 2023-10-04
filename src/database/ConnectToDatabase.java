@@ -18,14 +18,19 @@ public class ConnectToDatabase
 		init_db();  // open the connection to the database
 		try
 		{
-			rs = stmt.executeQuery("SELECT count(*) as total FROM employees");
-    			rs.next();//move to first, the query above only produces 1 tuple
-   	 		int myTotal = rs.getInt("total");
-    			System.out.println("Total employees: "+myTotal);
+			rs = stmt.executeQuery("SELECT * FROM customer_docket");
+			while (rs.next()) {
+				int empid = rs.getInt(1);
+				String firstname = rs.getString(2);
+				String lastname = rs.getString(3);
+				String address = rs.getString(4);
+				int phoneNumber = rs.getInt(5);
+				System.out.println(empid + " " + firstname + " " + lastname + " " + address+ " " + phoneNumber);
+			}
 		}
 		catch (SQLException sqle)
 		{
-			System.out.println("Error: failed to get number of records");
+			System.out.println("Error: failed to print customer docket");
 		}
 		try
 		{
@@ -42,9 +47,9 @@ public class ConnectToDatabase
 	{
 		try
 		{
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			String url="jdbc:mysql://127.0.0.1:3306/NewsDelivery?useTimezone=true&serverTimezone=UTC";
+			String url="jdbc:mysql://localhost:3306/newsdelivery";
 			con = DriverManager.getConnection(url, "root", "admin");
+			System.out.println("Success");
 			stmt = con.createStatement();
 		}
 		catch(Exception e)
