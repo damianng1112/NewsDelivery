@@ -2,19 +2,27 @@ package entities;
 
 public class Admin {
 
-    public void createStaff(String name, String address, String phoneNumber, String publication) {
+    public String createStaff(String name, String address, String phoneNumber) {
+    	
+    	return "Staff has been created";
 		
 	}
 	
-	public String readStaff() {
-		return "";
+    //change back to string and return info
+	public void readStaff() {
+		
+//		return "Name: "+name+" Address: "+address+" Number: "+phoneNumber;
 	}
 	
-	public void updateStaff(String name, String address, String phoneNumber, String publication) {
+	public String updateStaff(String name, String address, String phoneNumber, String publication) {
+		
+		return "Information sucessfully changed";
 		
 	}
 	
-	public void deleteStaff() {
+	public String deleteStaff() {
+		
+		return "Staff succesfully deleted";
 		
 	}
     
