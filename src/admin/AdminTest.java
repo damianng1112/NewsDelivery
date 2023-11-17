@@ -1,4 +1,4 @@
-package test;
+package admin;
 
 public class AdminTest {
     
