@@ -1,4 +1,4 @@
-package entities;
+package newsAgent;
 
 public class NewsAgent {
 	

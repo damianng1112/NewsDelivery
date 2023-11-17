@@ -1,1 +1,7 @@
-/database/
+/admin/
+/entities/
+/customer/
+/deliveryDocket/
+/deliveryPerson/
+/newsAgent/
+/order/

@@ -1,4 +1,4 @@
-package entities;
+package customer;
 
 public class Customers {
 	private String name;

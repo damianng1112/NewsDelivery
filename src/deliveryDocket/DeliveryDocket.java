@@ -1,4 +1,4 @@
-package entities;
+package deliveryDocket;
 
 public class DeliveryDocket {
     
