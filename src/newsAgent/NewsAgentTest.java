@@ -5,10 +5,10 @@ import junit.framework.TestCase;
 
 public class NewsAgentTest extends TestCase {
 
-	// Test #: 1
+		// Test #: 1
 		// Test Objective: To create a News Agent Account
-		// Inputs: cus_id = "1", name = "Damian Ng", address = "Athlone", Contact = "0871234567"
-		// Expected Output: News Agent Object created with cus_id = 1, "Damian Ng", Addr
+		// Inputs: cus_id = "1", name = "DamianNg", address = "Athlone", Contact = "0871234567"
+		// Expected Output: News Agent Object created with cus_id = 1, "DamianNg", Addr
 		// = "Athlone", Contact = "0871234567"
 
 		public void testNewsAgent001() {
@@ -18,11 +18,11 @@ public class NewsAgentTest extends TestCase {
 			try {
 
 				// Call method under test
-				NAObj = new NewsAgent(1, "Damian Ng", "Athlone", "0871234567");
+				NAObj = new NewsAgent(1, "DamianNg", "Athlone", "0871234567");
 
 				// Use getters to check for object creation
 				assertEquals(1, NAObj.getCus_id());
-				assertEquals("Damian Ng", NAObj.getNa_name());
+				assertEquals("DamianNg", NAObj.getNa_name());
 				assertEquals("Athlone", NAObj.getNa_address());
 				assertEquals("0871234567", NAObj.getNa_number());
 
