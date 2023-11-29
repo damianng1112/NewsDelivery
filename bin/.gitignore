@@ -1,4 +1,10 @@
-/test/
-/CustomerExceptionHandler.class
-/Customer/
-/entities/
+/admin/
+/customer/
+/database/
+/deliveryDocket/
+/deliveryPerson/
+/invoice/
+/login/
+/newsAgent/
+/order/
+/publication/
