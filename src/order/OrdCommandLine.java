@@ -26,9 +26,9 @@ public class OrdCommandLine {
 	private static boolean printOrderTable(ResultSet rs) throws Exception {
 	    // Print the contents of the Full Order Table
 
-	    System.out.printf("%-5s%-15s%-15s%-15s%-15s%-15s%n",
+	    System.out.printf("%-10s%-15s%-20s%-25s%-20s%-15s%n",
 	            "Order ID", "Customer ID", "Customer Name", "Customer Address", "Customer Number", "Publication");
-	    System.out.println("--------------------------------------------------------------");
+	    System.out.println("-------------------------------------------------------------------------------------------------");
 
 	    // Iterate through the result set
 	    while (rs.next()) {
@@ -39,13 +39,14 @@ public class OrdCommandLine {
 	        String customerNumber = rs.getString("cus_number");
 	        String publication = rs.getString("publication");
 
-	        System.out.printf("%-5d%-15s%-15s%-15s%-15s%-15s%n",
+	        System.out.printf("%-10d%-15s%-20s%-25s%-20s%-15s%n",
 	                orderId, customerId, customerName, customerAddress, customerNumber, publication);
 	    }// end while
-	    System.out.println("--------------------------------------------------------------");
+	    System.out.println("-------------------------------------------------------------------------------------------------");
 
 	    return true;
 	}
+
 
 	public static void show() {
 		

@@ -15,17 +15,27 @@ public class MySQLAccess{
 	static Connection con = null;
 	static Statement stmt = null;
 	static ResultSet rs = null;
+	
+	final private String host ="localhost:3306";
+	final private String user = "root";
+	final private String password = "";
 		
-	public static void init_db(){
-		try{
-			String url="jdbc:mysql://localhost:3306/newsagentdb";
-			con = DriverManager.getConnection(url, "root", "");
-			System.out.println("Success");
-			stmt = con.createStatement();
-		}catch(Exception e){
-			System.out.println("Error: Failed to connect to database\n" + e.getMessage());
+	public MySQLAccess() throws Exception {
+		
+		try {
+			
+			//Load MySQL Driver
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			//Setup the connection with the DB
+			con = DriverManager.getConnection("jdbc:mysql://" + host + "/newsagentdb?" + "user=" + user + "&password=" + password);
 		}
-	}
+		catch (Exception e) {
+			throw e;
+		}
+		
+		
+}
 	
 public boolean insertOrderDetails(Order o) {
 		
