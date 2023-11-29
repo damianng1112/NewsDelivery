@@ -1,4 +1,4 @@
-package customer;
+package Customer;
 
 public class Customer {
     private String cusId;
