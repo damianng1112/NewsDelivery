@@ -1,50 +1,82 @@
 package newsAgent;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import customer.Customers;
-
 class NewsAgentTest {
 
-	/*
-	 * Test case 1
-	 * Method: create a customer
-	 * Input: name, address, phoneNumber, publication
-	 * Expected Output: True
-	 */
-	@Test
-	void testCreateCustomer() {
-		Customers cus1 = new Customers();
-		cus1.setName("John");
-		cus1.setAddress("Athlone");
-		cus1.setPhoneNumber("0871234567");
-		cus1.setPublication("Irish Times");
+	// Test #: 1
+		// Test Objective: To create a News Agent Account
+		// Inputs: cus_id = "1", name = "Damian", address = "Athlone", Contact = "0871234567"
+		// Expected Output: News Agent Object created with cus_id = 1, "Damian", Addr
+		// = "Athlone", Contact = "0871234567"
+
+		public void testNewsAgent001() {
+
+			// Create the Customer Object
+
+			NewsAgent NAObj = null;
+
+			try {
+
+				// Call method under test
+				NAObj = new NewsAgent(1, "Damian", "Athlone", "0871234567");
+
+				// Use getters to check for object creation
+				assertEquals(1, NAObj.getCus_id());
+				assertEquals("Damian", NAObj.getNa_name());
+				assertEquals("Athlone", NAObj.getNa_address());
+				assertEquals("0871234567", NAObj.getNa_number());
+
+			} catch (NewsAgentExceptionHandler e) {
+				// TODO Auto-generated catch block
+				fail("Exception not expected");
+			}
+
+		}
 		
-		NewsAgent newsAgent = new NewsAgent();
-		newsAgent.createCustomer(cus1);
+		// Test #: 2
+		// Test Objective: To catch a invalid News Agent Name
+		// Inputs: name = "D"
+		// Expected Output: Exception Message: "News Agent Name does not meet
+		// minimum length requirements"
+
+		public void validateNewsAgent_Name() {
+
+			try {
+
+				// Call method under test
+				NewsAgent.validateNAName("D");
+				fail("Exception expected");
+			} catch (NewsAgentExceptionHandler e) {
+				// TODO Auto-generated catch block
+				assertEquals("News Agent Name does not meet minimum length requirements", e.getMessage());
+
+			}
+
+		}
 		
-		assertEquals(cus1.getName(), newsAgent);
-		assertEquals(cus1.getAddress(), newsAgent);
-		assertEquals(cus1.getPhoneNumber(), newsAgent);
-		assertEquals(cus1.getPublication(), newsAgent);
-	}
+		// Test #: 3
+		// Test Objective: To catch a invalid News Agent Name
+		// Inputs: name = "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+		// Expected Output: Exception Message: "News Agent Name does not exceeds
+		// maximum length requirements"
 
-	@Test
-	void testReadCustomer() {
-		fail("Not yet implemented");
-	}
+		public void validateNewsAgent_Name002() {
 
-	@Test
-	void testUpdateCustomer() {
-		fail("Not yet implemented");
-	}
+			try {
 
-	@Test
-	void testDeleteCustomer() {
-		fail("Not yet implemented");
-	}
+				// Call method under test
+				NewsAgent.validateNAName("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+				fail("Exception expected");
+			} catch (NewsAgentExceptionHandler e) {
+				// TODO Auto-generated catch block
+				assertEquals("News Agent name exceeds max length requirements", e.getMessage());
+
+			}
+		}
+		
+		
 
 }
