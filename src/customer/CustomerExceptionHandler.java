@@ -1,4 +1,4 @@
-package customer;
+package Customer;
 
 public class CustomerExceptionHandler extends Exception {
 	String message;
