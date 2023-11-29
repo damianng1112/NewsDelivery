@@ -1,5 +1,6 @@
 package newsAgent;
 
+import java.math.BigInteger;
 import java.util.regex.*;
 
 public class NewsAgent {
@@ -71,7 +72,7 @@ public class NewsAgent {
 	
 	public static boolean isNumber(String input) {
         try {
-            Integer.parseInt(input);
+            new BigInteger(input);
             return true;
         } catch (NumberFormatException e) {
             // The input is not a number
@@ -80,27 +81,27 @@ public class NewsAgent {
     }
 	
 	public static void validateNAName(String n) throws NewsAgentExceptionHandler {
-		if (n.isBlank() || n.isEmpty())
-			throw new NewsAgentExceptionHandler("News Agent name NOT specified");
-		else if (containsNumber(n))
-			throw new NewsAgentExceptionHandler("News Agent name CANNOT have number");
-		else if (n.length()<8){
-			throw new NewsAgentExceptionHandler("News Agent name does not meet minimum length requirements");
-		}
-		else if (n.length()>20){
-			throw new NewsAgentExceptionHandler("News Agent name exceeds max length requirements");
-		}
+	    if (n.isBlank() || n.isEmpty()) {
+	        throw new NewsAgentExceptionHandler("News Agent name NOT specified");
+	    } else if (containsNumber(n)) {
+	        throw new NewsAgentExceptionHandler("News Agent name CANNOT have a number");
+	    } else if (n.length() < 8) {
+	        throw new NewsAgentExceptionHandler("News Agent name does not meet minimum length requirements");
+	    } else if (n.length() > 20) {
+	        throw new NewsAgentExceptionHandler("News Agent name exceeds maximum length requirements");
+	    }
 	}
+
 
 	public static void validateNANumber(String num) throws NewsAgentExceptionHandler {
 		if (num.isBlank() || num.isEmpty())
 			throw new NewsAgentExceptionHandler("News Agent number NOT specified");
-		else if (!isNumber(num))
+		else if (isNumber(num)==false)
 			throw new NewsAgentExceptionHandler("News Agent number CANNOT contain characters");
 		else if (num.length() < 7)
-			throw new NewsAgentExceptionHandler("News Agent ContactNumber does not meet minimum length requirements");
+			throw new NewsAgentExceptionHandler("News Agent number does not meet minimum length requirements");
 		else if (num.length() > 15)
-			throw new NewsAgentExceptionHandler("News Agent ContactNumber exceeds maximum length");
+			throw new NewsAgentExceptionHandler("News Agent number exceeds maximum length");
 				
 	}
 	
@@ -110,7 +111,7 @@ public class NewsAgent {
 		else if (address.length() < 2)
 			throw new NewsAgentExceptionHandler("News Agent Address does not meet minimum length requirements");
 		else if (address.length() > 40)
-			throw new NewsAgentExceptionHandler("News Agent Address does not exceeds maximum length requirements");
+			throw new NewsAgentExceptionHandler("News Agent Address exceeds maximum length requirements");
 		
 	}
 
