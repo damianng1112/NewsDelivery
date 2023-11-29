@@ -1,9 +1,10 @@
 /admin/
-/entities/
 /customer/
+/database/
 /deliveryDocket/
 /deliveryPerson/
+/invoice/
+/login/
 /newsAgent/
 /order/
-/test/
-/login/
+/publication/
