@@ -18,7 +18,7 @@ public class MySQLAccess{
 		
 	public static void init_db(){
 		try{
-			String url="jdbc:mysql://localhost:3306/newsdelivery";
+			String url="jdbc:mysql://localhost:3306/newsagentdb";
 			con = DriverManager.getConnection(url, "root", "");
 			System.out.println("Success");
 			stmt = con.createStatement();
@@ -31,12 +31,12 @@ public boolean insertOrderDetails(Order o) {
 		
 		boolean insertSucessfull = true;
 	
-		//Add Code here to call embedded SQL to insert Customer into DB
+		//Add Code here to call embedded SQL to insert order into DB
 	
 		try {
 		
 			//Create prepared statement to issue SQL query to the database
-			pstmt = con.prepareStatement("insert into newagentdb.order values (default, ?, ?, ?,?,?)");
+			pstmt = con.prepareStatement("insert into newsagentdb.order values (default, ?, ?, ?,?,?)");
 			pstmt.setString(1, o.getCus_id());
 			pstmt.setString(2, o.getCus_name());
 			pstmt.setString(3, o.getCus_address());
@@ -99,10 +99,10 @@ public boolean insertOrderDetails(Order o) {
 			//Create prepared statement to issue SQL query to the database
 			if (ordID == -99)
 				//Delete all entries in Table
-				pstmt = con.prepareStatement("delete from newspaper.order");
+				pstmt = con.prepareStatement("delete from newsagentdb.order");
 			else
 				//Delete a particular order
-				pstmt = con.prepareStatement("delete from newspaper.order where id = " + ordID);
+				pstmt = con.prepareStatement("delete from newsagentdb.order where id = " + ordID);
 			pstmt.executeUpdate();
 		 
 		}

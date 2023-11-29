@@ -28,7 +28,7 @@ public class MySQLAccess{
 		try {
 		
 			//Create prepared statement to issue SQL query to the database
-			pstmt = con.prepareStatement("insert into newagentdb.customer values (default, ?, ?, ?,?,?)");
+			pstmt = con.prepareStatement("insert into newsagentdb.customer values (default, ?, ?, ?,?,?)");
 			pstmt.setString(1, c.getCus_name());
 			pstmt.setString(2, c.getCus_address());
 			pstmt.setString(3, c.getCus_number());
@@ -91,10 +91,10 @@ public class MySQLAccess{
 			//Create prepared statement to issue SQL query to the database
 			if (custID == -99)
 				//Delete all entries in Table
-				pstmt = con.prepareStatement("delete from newspaper.customer");
+				pstmt = con.prepareStatement("delete from newsagentdb.customer");
 			else
 				//Delete a particular Customer
-				pstmt = con.prepareStatement("delete from newspaper.customer where id = " + custID);
+				pstmt = con.prepareStatement("delete from newsagentdb.customer where id = " + custID);
 			pstmt.executeUpdate();
 		 
 		}
