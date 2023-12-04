@@ -1,29 +1,28 @@
 package newsAgent;
 
-import java.math.BigInteger;
 import java.util.regex.*;
 
 public class NewsAgent {
 	private int Nagent_id;
+	private int user_id;
 	private int cus_id;
 	private String na_name;
-	private String na_number;
 	private String na_address;
 	
-	public NewsAgent(int cus_id, String na_name, String na_address, String na_number) throws NewsAgentExceptionHandler{
+	public NewsAgent(int Nagent_id, int user_id, String na_name, String na_address) throws NewsAgentExceptionHandler{
 		try {
 			validateNAName(na_name);
-			validateNANumber(na_number);
 			validateNAAddress(na_address);
 		}catch(NewsAgentExceptionHandler e){
 			throw e;
 		}
-		this.cus_id=cus_id;
+		this.Nagent_id=Nagent_id;
+		this.user_id = user_id;
 		this.na_name=na_name;
-		this.na_number=na_number;
 		this.na_address=na_address;
 	}
-
+	
+	
 	public int getNagent_id() {
 		return Nagent_id;
 	}
@@ -48,14 +47,6 @@ public class NewsAgent {
 		this.na_name = na_name;
 	}
 
-	public String getNa_number() {
-		return na_number;
-	}
-
-	public void setNa_number(String na_number) {
-		this.na_number = na_number;
-	}
-
 	public String getNa_address() {
 		return na_address;
 	}
@@ -64,20 +55,19 @@ public class NewsAgent {
 		this.na_address = na_address;
 	}
 	
+	public int getUser_id() {
+		return user_id;
+	}
+
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+	
 	public static boolean containsNumber(String n) {
         Pattern pattern = Pattern.compile(".*\\d.*");
         Matcher matcher = pattern.matcher(n);
         return matcher.matches();
-    }
-	
-	public static boolean isNumber(String input) {
-        try {
-            new BigInteger(input);
-            return true;
-        } catch (NumberFormatException e) {
-            // The input is not a number
-            return false;
-        }
     }
 	
 	public static void validateNAName(String n) throws NewsAgentExceptionHandler {
@@ -90,19 +80,6 @@ public class NewsAgent {
 	    } else if (n.length() > 20) {
 	        throw new NewsAgentExceptionHandler("News Agent name exceeds maximum length requirements");
 	    }
-	}
-
-
-	public static void validateNANumber(String num) throws NewsAgentExceptionHandler {
-		if (num.isBlank() || num.isEmpty())
-			throw new NewsAgentExceptionHandler("News Agent number NOT specified");
-		else if (isNumber(num)==false)
-			throw new NewsAgentExceptionHandler("News Agent number CANNOT contain characters");
-		else if (num.length() < 7)
-			throw new NewsAgentExceptionHandler("News Agent number does not meet minimum length requirements");
-		else if (num.length() > 15)
-			throw new NewsAgentExceptionHandler("News Agent number exceeds maximum length");
-				
 	}
 	
 	public static void validateNAAddress(String address) throws NewsAgentExceptionHandler {				
