@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import newsAgent.NewsAgent;
@@ -20,7 +21,7 @@ public class MySQLAccess {
             String password = "123";
             this.connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            e.printStackTrace();  //  
+            e.printStackTrace();  // Handle connection errors
         }
     }
 
@@ -34,6 +35,32 @@ public class MySQLAccess {
             statement.executeUpdate();
         }
     }
+    
+    public void readAllNewAgent() throws SQLException {
+        String query = "SELECT * FROM newsagent";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            // Print table header
+            System.out.printf("%-20s %-20s %-15s %-15s%n", "Name", "Address");
+
+            // Print a line below the header
+            System.out.println(new String(new char[70]).replace("\0", "-"));
+
+            // Iterate through result set and print each row in a formatted way
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String address = resultSet.getString("address");   
+
+                // Print each customer's details in a tabular format
+                System.out.printf("%-20s %-20s %-15s %-15s%n", name, address);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 
     // Method to update a newsagent
     public void updateNewsagent(String name,String newName ,String address) throws Exception {
@@ -52,10 +79,10 @@ public class MySQLAccess {
     }
 
     // Method to delete a newsagent
-    public void deleteNewsagent(int nagentId) throws SQLException {
-        String query = "DELETE FROM newsagent WHERE Nagent_id = ?";
+    public void deleteNewsagent(String name) throws SQLException {
+        String query = "DELETE FROM newsagent WHERE name = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, nagentId);
+            statement.setString(1, name);
             statement.executeUpdate();
         }
     }

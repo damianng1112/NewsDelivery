@@ -1,5 +1,7 @@
 package customer;
 
+import customer.MySQLAccess;
+
 import java.util.Scanner;
 import java.sql.SQLException;
 
@@ -11,21 +13,13 @@ public class cCommandLine {
     public static void main(String[] args) throws Exception {
         dbAccess = new MySQLAccess();
         scanner = new Scanner(System.in);
+        generateMainMenu();
 
         try {
             dbAccess.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();  // Handle closing connection errors
         }
-    }
-
-    private static boolean validateAgentLogin() throws Exception {
-        System.out.println("Enter NewAgent username:");
-        String username = scanner.nextLine();
-        System.out.println("Enter NewAgent password:");
-        String password = scanner.nextLine();
-
-        return dbAccess.validateAdminLogin(username, password);
     }
 
     private static void generateMainMenu() throws Exception {
@@ -47,7 +41,7 @@ public class cCommandLine {
                     createCustomer();
                     break;
                 case 2:
-                    viewAllCustomer();
+                	readAllCustomers();
                     break;
                 case 3:
                     updateCustomer();
@@ -63,13 +57,18 @@ public class cCommandLine {
             }
         }
     }
-
-    private static void createNewsagent() {
+    
+    private static void readAllCustomers() {
+        try {
+            dbAccess.readAllCustomers();
+        } catch (SQLException e) {
+            System.out.println("Error reading customers: " + e.getMessage());
+        }
+    }
+    private static void createCustomer() {
         System.out.println("Creating a new Customer:");
         
-        System.out.println("Enter User ID:");
-        int userId = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline
+      
 
         System.out.println("Enter Cusotmer Name:");
         String name = scanner.nextLine();
@@ -77,19 +76,22 @@ public class cCommandLine {
         System.out.println("Enter Address:");
         String address = scanner.nextLine();
         
-        System.out.println("Enter Address:");
-        String address = scanner.nextLine();
+        System.out.println("Enter Number:");
+        String phoneNumber = scanner.nextLine();
+        
+        System.out.println("Enter Publication:");
+        String publication = scanner.nextLine();
 
         try {
-            dbAccess.createNewsagent(userId, name, address);
-            System.out.println("Newsagent created successfully.");
+            dbAccess.createCustomer(name,address,phoneNumber,publication);
+            System.out.println("Customer created successfully.");
         } catch (SQLException e) {
             System.out.println("Error creating newsagent: " + e.getMessage());
         }
     }
 
 
-    private static void updateNewsagent() throws Exception {
+    private static void updateCustomer() throws Exception {
         System.out.println("Updating a Newsagent:");
 
         System.out.println("Enter Newsagent name:");
@@ -102,9 +104,15 @@ public class cCommandLine {
 
             System.out.println("Enter new Address:");
             String newAddress = scanner.nextLine();
+            
+            System.out.println("Enter Number:");
+            String phoneNumber = scanner.nextLine();
+            
+            System.out.println("Enter Publication:");
+            String publication = scanner.nextLine();
 
             try {
-                dbAccess.updateNewsagent(name,newName, newAddress);
+                dbAccess.updateCustomer(name,newName, newAddress, phoneNumber, publication);
                 System.out.println("Newsagent updated successfully.");
             } catch (SQLException e) {
                 System.out.println("Error updating newsagent: " + e.getMessage());
@@ -116,15 +124,15 @@ public class cCommandLine {
     }
 
 
-    private static void deleteNewsagent() {
+    private static void deleteCustomer() {
         System.out.println("Deleting a Newsagent:");
 
-        System.out.println("Enter Newsagent ID to delete:");
-        int nagentId = scanner.nextInt();
+        System.out.println("Enter Customer Namr to delete:");
+        String name = scanner.nextLine();
         scanner.nextLine(); // Consume the newline
 
         try {
-            dbAccess.deleteNewsagent(nagentId);
+            dbAccess.deleteCustomer(name);
             System.out.println("Newsagent deleted successfully.");
         } catch (SQLException e) {
             System.out.println("Error deleting newsagent: " + e.getMessage());

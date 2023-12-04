@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class RegisterActivity {
 
-<<<<<<< HEAD
 	public void registerUser(Scanner scanner) {
         System.out.print("Enter a username: ");
         String username = scanner.nextLine();
@@ -17,14 +16,7 @@ public class RegisterActivity {
 //            userDatabase.put(username, password);
 //            System.out.println("Registration successful!");
 //        }
-    }
-=======
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		String username, password;
-		username = sc.next();
-		password = sc.next();
-	}
->>>>>>> FaithfulBranch
+}
+	 
 	
 }

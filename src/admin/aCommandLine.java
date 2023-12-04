@@ -41,6 +41,7 @@ public class aCommandLine {
         while (isRunning) {
             System.out.println("Main Menu:");
             System.out.println("1. Create Newsagent");
+            System.out.println("2. View All Newsagent");
             System.out.println("2. Update Newsagent");
             System.out.println("3. Delete Newsagent");
             System.out.println("4. Exit");
@@ -54,21 +55,32 @@ public class aCommandLine {
                     createNewsagent();
                     break;
                 case 2:
-                    updateNewsagent();
+                	readAllNewAgents();
                     break;
                 case 3:
-                    deleteNewsagent();
+                    updateNewsagent();
                     break;
                 case 4:
+                    deleteNewsagent();
+                    break;
+                case 5:
                     isRunning = false;
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
+                     
             }
         }
     }
+    private static void readAllNewAgents() {
+        try {
+            dbAccess.readAllNewAgent();
+        } catch (SQLException e) {
+            System.out.println("Error reading customers: " + e.getMessage());
+        }
+    }
 
-    private static void createNewsagent() {
+	private static void createNewsagent() {
         System.out.println("Creating a new Newsagent:");
         
         System.out.println("Enter User ID:");
@@ -121,11 +133,11 @@ public class aCommandLine {
         System.out.println("Deleting a Newsagent:");
 
         System.out.println("Enter Newsagent ID to delete:");
-        int nagentId = scanner.nextInt();
+        String name = scanner.nextLine();
         scanner.nextLine(); // Consume the newline
 
         try {
-            dbAccess.deleteNewsagent(nagentId);
+            dbAccess.deleteNewsagent(name);
             System.out.println("Newsagent deleted successfully.");
         } catch (SQLException e) {
             System.out.println("Error deleting newsagent: " + e.getMessage());
