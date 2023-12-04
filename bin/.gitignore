@@ -1,2 +1,15 @@
+<<<<<<< HEAD
 /newsAgent/
 /order/
+=======
+/admin/
+/customer/
+/database/
+/deliveryDocket/
+/deliveryPerson/
+/invoice/
+/login/
+/newsAgent/
+/order/
+/publication/
+>>>>>>> 85133122efa36d77fa483be4ff28cf5681582f6e
