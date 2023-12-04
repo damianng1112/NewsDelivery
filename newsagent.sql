@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS newsagentdb;
 CREATE DATABASE newsagentdb;
 USE newsagentdb;
 

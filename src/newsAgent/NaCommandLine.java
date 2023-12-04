@@ -10,7 +10,6 @@ import Customer.Customer;
 import Customer.MySQLAccess;
 import index.Managerindex;
 
->>>>>>> main
 
 public class NaCommandLine {
 	
@@ -92,11 +91,7 @@ public void show() {
 				System.out.printf("Enter Customer Publication: \n");
 				String custPub = keyboard.next();
 				
-<<<<<<< HEAD
 				Customer custObj = new Customer(custName,custAddr,custphoneNumber,custArea, custPub);
-=======
-				Customer custObj = new Customer(custName,custAddr,custphoneNumber,custArea);
->>>>>>> main
 			
 				//Insert Customer Details into the database
 				boolean insertResult = dao.insertCustomerDetailsAccount(custObj);
@@ -125,11 +120,7 @@ public void show() {
 				System.out.println("Enter Customer Id to be updated");
 				String updateCustId = keyboard.next();
 				boolean updateResult = dao.updateCustomerById(Integer.parseInt(updateCustId));
-<<<<<<< HEAD
-				if (updateResult==true)
-=======
 				if(updateResult==true)
->>>>>>> main
 					System.out.println("Customer Updated");
 				else 
 					System.out.println("ERROR: Customer Details NOT updated or Do Not Exist");
@@ -147,11 +138,7 @@ public void show() {
 				else 
 					System.out.println("ERROR: Customer Details NOT Deleted or Do Not Exist");
 				break;
-<<<<<<< HEAD
-		
-=======
-				
->>>>>>> main
+						
 			case "99":
 				keepAppOpen = false;
 				break;
