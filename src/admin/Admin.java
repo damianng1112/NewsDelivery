@@ -1,69 +1,3 @@
-<<<<<<< HEAD
-<<<<<<<< HEAD:src/admin/Admin.java
-package admin;
-
-public class Admin {
-<<<<<<< HEAD
-
-    public void createStaff(String name, String address, String phoneNumber, String publication) {
-		
-=======
-	
-	private String admin_id;
-	private String NagentName;
-	private String NagentAddress;
-	private String NagentNumber;
-
-    public  Admin(String admin_id, String NagentName, String NagentAddress, String NagentNumber) {
-		 
->>>>>>> main
-	}
-	
-	public String readStaff() {
-		return "";
-	}
-	
-	public void updateStaff(String name, String address, String phoneNumber, String publication) {
-		
-	}
-	
-	public void deleteStaff() {
-		
-	}
-    
-}
-========
-package entities;
-
-public class Admin {
-
-    public String createStaff(String name, String address, String phoneNumber) {
-    	
-    	return "Staff has been created";
-		
-	}
-	
-    //change back to string and return info
-	public void readStaff() {
-		
-//		return "Name: "+name+" Address: "+address+" Number: "+phoneNumber;
-	}
-	
-	public String updateStaff(String name, String address, String phoneNumber, String publication) {
-		
-		return "Information sucessfully changed";
-		
-	}
-	
-	public String deleteStaff() {
-		
-		return "Staff succesfully deleted";
-		
-	}
-    
-}
->>>>>>>> FaithfulBranch:src/entities/Admin.java
-=======
 package admin;
 
 public class Admin {
@@ -141,4 +75,3 @@ public class Admin {
 
 	 
 }
->>>>>>> FaithfulBranch

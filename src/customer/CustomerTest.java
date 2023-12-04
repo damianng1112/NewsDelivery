@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 package customer;
-=======
-package Customer;
->>>>>>> FaithfulBranch
+ 
+ 
 
 import junit.framework.TestCase;
 
@@ -228,8 +226,7 @@ public class CustomerTest extends TestCase {
 		assertEquals("Hong Athlone 087-123123123 Garry", a);
 
 	}
-<<<<<<< HEAD
-=======
+ 
 	
 	// Test #: 12
 	// Test Objective: To catch an invalid Customer Publication
@@ -298,5 +295,5 @@ public class CustomerTest extends TestCase {
 	    }
 	}
 
->>>>>>> FaithfulBranch
+ 
 }

@@ -1,152 +1,136 @@
-package Customer;
+package customer;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.util.Scanner;
-
-import index.Managerindex;
+import java.sql.SQLException;
 
 public class cCommandLine {
-	
-	private static void listCustomerFuctionalityAvailable() {
-		
-		//Present Customer with Functionality Options
-		
-		System.out.println(" ");
-		System.out.println("=============================================");
-		System.out.println("Please choose ONE of the following options:");
-		System.out.println("1. Create Customer Account");
-		System.out.println("2. View ALL Customer Records");
-		System.out.println("3. Delete Customer Record by ID");
-		System.out.println("99.Close the NewsAgent Application");
-		System.out.println("=============================================");
-		System.out.println(" ");
-		
-	}
 
-	
-	private static boolean printCustomerTable(ResultSet rs) throws Exception {
-		
-		//Print The Contents of the Full Customer Table
-		
-		System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("Table: " + rs.getMetaData().getTableName(1));
-		for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-			System.out.printf("%30s",rs.getMetaData().getColumnName(i));
-		}
-		System.out.println();
-		while (rs.next()) {
-			int id = rs.getInt("Customer_id");
-			String name = rs.getString("Name");
-			String addr = rs.getString("Address");
-			String phone = rs.getString("Contact_num");
-			String area = rs.getString("Delivery_area");
-			System.out.printf("%30s", id);
-			System.out.printf("%30s", name);
-			System.out.printf("%30s", addr);
-			System.out.printf("%30s", phone);
-			System.out.printf("%30s", area);
-			System.out.println();
-		}// end while
-		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
-		
-		return true;
-		
-	}
+    private static MySQLAccess dbAccess;
+    private static Scanner scanner;
 
-	public void show() {
-		
-		//Create the Database Object
-		
-		try {
-			
-			MySQLAccess dao = new MySQLAccess();
-		
-			// Configure System for Running
-			Scanner keyboard = new Scanner(System.in); 
-			String functionNumber = "-99";
-			boolean keepAppOpen = true;
-		
-			while (keepAppOpen == true) {
-			
-				//Present list of functionality and get selection
-				listCustomerFuctionalityAvailable();
-				functionNumber = keyboard.next();
-		
-				switch (functionNumber) {
-		
-				case "1":
-					//Get Customer Details from the User
-					System.out.printf("Enter Customer Name: \n");
-					String custName = keyboard.next();
-					System.out.printf("Enter Customer Address: \n");
-					String custAddr = keyboard.next();
-					System.out.printf("Enter Customer PhoneNumber: \n");
-					String custphoneNumber = keyboard.next();
-					System.out.printf("Enter Customer Area: \n");
-					String custArea = keyboard.next();
-					
-					Customer custObj = new Customer(custName,custAddr,custphoneNumber,custArea);
-				
-					//Insert Customer Details into the database
-					boolean insertResult = dao.insertCustomerDetailsAccount(custObj);
-					if (insertResult == true)
-						System.out.println("Customer Details Saved");
-					else 
-						System.out.println("ERROR: Customer Details NOT Saved");
-					break;
-					
-				case "2": 
-					//Retrieve ALL Customer Records
-					ResultSet rSet = dao.retrieveAllCustomerAccounts();
-					if (rSet == null) {
-						System.out.println("No Records Found");
-						break;
-					}
-					else {
-						boolean tablePrinted = printCustomerTable(rSet);
-						if (tablePrinted == true)
-							rSet.close();
-					}
-					break;
-					
-				case "3":
-					//Delete Customer Record by ID
-					System.out.println("Enter Customer Id to be deleted or -99 to Clear all Rows");
-					String deleteCustId = keyboard.next();
-					boolean deleteResult = dao.deleteCustomerById(Integer.parseInt(deleteCustId));
-					if ((deleteResult == true) && (deleteCustId.equals("-99")))
-						System.out.println("Customer Table Emptied");
-					else if (deleteResult == true)
-						System.out.println("Customer Deleted");
-					else 
-						System.out.println("ERROR: Customer Details NOT Deleted or Do Not Exist");
-					break;
-			
-				case "99":
-					keepAppOpen = false;
-					Managerindex i= new Managerindex();
-					i.show();
-					break;
-			
-				default:
-					System.out.println("No Valid Function Selected");
-					break;
-				} // end switch
-		
-			}// end while
-		
-			//Tidy up Resources
-			keyboard.close();
-		
-		}
-	
-		catch(Exception e) {
-			System.out.println("PROGRAM TERMINATED - ERROR MESSAGE:" + e.getMessage());
-		} // end try-catch
-		
+    public static void main(String[] args) throws Exception {
+        dbAccess = new MySQLAccess();
+        scanner = new Scanner(System.in);
 
-	} // end main
-	
-	
+        try {
+            dbAccess.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle closing connection errors
+        }
+    }
+
+    private static boolean validateAgentLogin() throws Exception {
+        System.out.println("Enter NewAgent username:");
+        String username = scanner.nextLine();
+        System.out.println("Enter NewAgent password:");
+        String password = scanner.nextLine();
+
+        return dbAccess.validateAdminLogin(username, password);
+    }
+
+    private static void generateMainMenu() throws Exception {
+        boolean isRunning = true;
+        while (isRunning) {
+            System.out.println("Main Menu:");
+            System.out.println("1. Create Customer");
+            System.out.println("2. Read All Customer");
+            System.out.println("3. Update Customer");
+            System.out.println("4. Delete Customer");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline left-over
+
+            switch (choice) {
+                case 1:
+                    createCustomer();
+                    break;
+                case 2:
+                    viewAllCustomer();
+                    break;
+                case 3:
+                    updateCustomer();
+                    break;
+                case 4:
+                    deleteCustomer();
+                    break;
+                case 5:
+                    isRunning = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void createNewsagent() {
+        System.out.println("Creating a new Customer:");
+        
+        System.out.println("Enter User ID:");
+        int userId = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+
+        System.out.println("Enter Cusotmer Name:");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter Address:");
+        String address = scanner.nextLine();
+        
+        System.out.println("Enter Address:");
+        String address = scanner.nextLine();
+
+        try {
+            dbAccess.createNewsagent(userId, name, address);
+            System.out.println("Newsagent created successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error creating newsagent: " + e.getMessage());
+        }
+    }
+
+
+    private static void updateNewsagent() throws Exception {
+        System.out.println("Updating a Newsagent:");
+
+        System.out.println("Enter Newsagent name:");
+        String name = scanner.nextLine();
+        
+        if (dbAccess.validateName(name)) {
+
+            System.out.println("Enter new Name:");
+            String newName = scanner.nextLine();
+
+            System.out.println("Enter new Address:");
+            String newAddress = scanner.nextLine();
+
+            try {
+                dbAccess.updateNewsagent(name,newName, newAddress);
+                System.out.println("Newsagent updated successfully.");
+            } catch (SQLException e) {
+                System.out.println("Error updating newsagent: " + e.getMessage());
+            }
+        }else {
+        	System.out.println("unknow");
+        }
+
+    }
+
+
+    private static void deleteNewsagent() {
+        System.out.println("Deleting a Newsagent:");
+
+        System.out.println("Enter Newsagent ID to delete:");
+        int nagentId = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+
+        try {
+            dbAccess.deleteNewsagent(nagentId);
+            System.out.println("Newsagent deleted successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error deleting newsagent: " + e.getMessage());
+        }
+    }
+
+
+    // Implement other methods as needed...
 }

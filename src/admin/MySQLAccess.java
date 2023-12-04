@@ -15,13 +15,12 @@ public class MySQLAccess {
 
     public MySQLAccess() {
         try {
-            // Replace with your actual database details
             String url = "jdbc:mysql://localhost:3307/newsagentdb";
             String user = "root";
             String password = "123";
             this.connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            e.printStackTrace();  // Handle connection errors
+            e.printStackTrace();  //  
         }
     }
 
