@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class LoginActivity {
 
+<<<<<<< HEAD
 	public void loginUser(Scanner scanner) {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
@@ -14,6 +15,14 @@ public class LoginActivity {
 //        } else {
 //            System.out.println("Login failed. Please check your username and password.");
 //        }
+=======
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String username, password;
+		username = sc.next();
+		password = sc.next();
+		//access database to see type of user, ex. agent or delivery
+>>>>>>> FaithfulBranch
 	}
 
 }

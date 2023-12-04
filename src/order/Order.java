@@ -1,6 +1,7 @@
 package order;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.math.BigInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -145,11 +146,17 @@ public class Order {
 	private String cus_address;
 	private String cus_number;
 	private String publication;
+=======
+public class Order {
+>>>>>>> FaithfulBranch
 	
 	public void createOrder() {
 		System.out.println("new model");
 	}
 	
+<<<<<<< HEAD
 >>>>>>> main
+=======
+>>>>>>> FaithfulBranch
 	
 }

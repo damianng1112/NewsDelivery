@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package customer;
+=======
+package Customer;
+>>>>>>> FaithfulBranch
 
 import junit.framework.TestCase;
 
@@ -224,4 +228,75 @@ public class CustomerTest extends TestCase {
 		assertEquals("Hong Athlone 087-123123123 Garry", a);
 
 	}
+<<<<<<< HEAD
+=======
+	
+	// Test #: 12
+	// Test Objective: To catch an invalid Customer Publication
+	// Inputs: publication = ""
+	// Expected Output: Exception Message: "Customer Publication NOT specified"
+
+	public void testValidatePublication001() {
+
+	    try {
+
+	        // Call method under test
+	        Customer.validatePublication("");
+	        fail("Exception expected");
+	    } catch (CustomerExceptionHandler e) {
+	        assertEquals("Customer Publication NOT specified", e.getMessage());
+	    }
+	}
+
+	// Test #: 13
+	// Test Objective: To catch an invalid Customer Publication
+	// Inputs: publication = "Mag"
+	// Expected Output: Exception Message: "Customer Publication does not meet minimum length requirements"
+
+	public void testValidatePublication002() {
+
+	    try {
+
+	        // Call method under test
+	        Customer.validatePublication("Mag");
+	        fail("Exception expected");
+	    } catch (CustomerExceptionHandler e) {
+	        assertEquals("Customer Publication does not meet minimum length requirements", e.getMessage());
+	    }
+	}
+
+	// Test #: 14
+	// Test Objective: To catch an invalid Customer Publication
+	// Inputs: publication = "Magazineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+	// Expected Output: Exception Message: "Customer Publication does not exceed maximum length requirements"
+
+	public void testValidatePublication003() {
+
+	    try {
+
+	        // Call method under test
+	        Customer.validatePublication("Magazineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+	        fail("Exception expected");
+	    } catch (CustomerExceptionHandler e) {
+	        assertEquals("Customer Publication does not exceed maximum length requirements", e.getMessage());
+	    }
+	}
+	
+ 
+
+	// Test #: 14
+	// Test Objective: To validate a valid Customer Publication
+	// Inputs: publication = "Magazine"
+	// Expected Output: No exception should be thrown
+
+	public void testValidatePublication004() {
+	    try {
+	        // Call method under test
+	        Customer.validatePublication("Magazine");
+	    } catch (CustomerExceptionHandler e) {
+	        fail("No exception expected");
+	    }
+	}
+
+>>>>>>> FaithfulBranch
 }

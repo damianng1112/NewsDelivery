@@ -1,6 +1,7 @@
 package invoice;
 
 public class Invoice {
+<<<<<<< HEAD
 	
 	public void createInvoice(String name, String address, String publication) {
 		
@@ -21,4 +22,7 @@ public class Invoice {
 	public double calcPrice() {
 		return 0;
 	}
+=======
+
+>>>>>>> FaithfulBranch
 }

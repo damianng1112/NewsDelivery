@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package customer;
+=======
+package Customer;
+>>>>>>> FaithfulBranch
 
 public class Customer {
     private String cusId;
@@ -91,6 +95,18 @@ public class Customer {
         else if (phoneNumber.length() < 7 || phoneNumber.length() > 15)
             throw new CustomerExceptionHandler("Customer PhoneNumber does not meet length requirements");
     }
+<<<<<<< HEAD
+=======
+    
+    public static void validatePublication(String publication) throws CustomerExceptionHandler {
+      
+
+        if (publication.isBlank() || publication.isEmpty())
+            throw new CustomerExceptionHandler("Customer PhoneNumber NOT specified");
+        else if (publication.length() < 7 || publication.length() > 15)
+            throw new CustomerExceptionHandler("Customer PhoneNumber does not meet length requirements");
+    }
+>>>>>>> FaithfulBranch
 
     public String viewCustomer() {
         return name + " " + address + " " + phoneNumber + " " + publication;

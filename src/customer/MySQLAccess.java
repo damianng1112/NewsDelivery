@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package customer;
+=======
+package Customer;
+>>>>>>> FaithfulBranch
 
 import java.sql.Connection;
 import java.sql.DriverManager;

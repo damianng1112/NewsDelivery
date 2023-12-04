@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package customer;
+=======
+package Customer;
+>>>>>>> FaithfulBranch
 
 public class CustomerExceptionHandler extends Exception {
 	String message;
