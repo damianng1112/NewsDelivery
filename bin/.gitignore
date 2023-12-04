@@ -1,9 +1,2 @@
-/admin/
-/entities/
-/customer/
-/deliveryDocket/
 /deliveryPerson/
-/newsAgent/
-/order/
-/test/
-/login/
+/deliveryDocket/
