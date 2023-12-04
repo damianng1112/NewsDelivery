@@ -9,17 +9,32 @@ import java.sql.Statement;
 
 public class ConnectToDatabase{
 	static Connection con = null;
-	static Statement stmt = null;
-	static ResultSet rs = null;
-		
-	public static void init_db(){
-		try{
-			String url="jdbc:mysql://localhost:3306/newsdelivery";
-			con = DriverManager.getConnection(url, "root", "admin");
-			System.out.println("Success");
-			stmt = con.createStatement();
-		}catch(Exception e){
-			System.out.println("Error: Failed to connect to database\n" + e.getMessage());
+
+	public static Connection getConnection(){
+		if (con == null) {
+			try{
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				String url="jdbc:mysql://localhost:3306/newsAgent";
+				con = DriverManager.getConnection(url, "root", "");
+				System.out.println("Success");
+			}catch(Exception e){
+				System.out.println("Error: Failed to connect to database\n" + e.getMessage());
+			}
 		}
+		return con;
+	}
+	
+	public static void closeConnection() {
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+	}
+	
+	public static void main (String[] args) {
+		getConnection();
 	}
 }

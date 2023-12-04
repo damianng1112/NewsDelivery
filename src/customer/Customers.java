@@ -5,9 +5,16 @@ public class Customers {
 	private String address;
 	private String phoneNumber;
 	private String publication;
-	private boolean holStatus;
-	private boolean paidStatus;
+	private String town;
+//	private boolean holStatus;
+//	private boolean paidStatus;
 	
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
+	}
 	public String getName() {
 		return name;
 	}
@@ -26,22 +33,22 @@ public class Customers {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public boolean isPaidStatus() {
-		return paidStatus;
-	}
-	public void setPaidStatus(boolean paidStatus) {
-		this.paidStatus = paidStatus;
-	}
+//	public boolean isPaidStatus() {
+//		return paidStatus;
+//	}
+//	public void setPaidStatus(boolean paidStatus) {
+//		this.paidStatus = paidStatus;
+//	}
 	public String getPublication() {
 		return publication;
 	}
 	public void setPublication(String publication) {
 		this.publication = publication;
 	}
-	public boolean isHolStatus() {
-		return holStatus;
-	}
-	public void setHolStatus(boolean holStatus) {
-		this.holStatus = holStatus;
-	}
+//	public boolean isHolStatus() {
+//		return holStatus;
+//	}
+//	public void setHolStatus(boolean holStatus) {
+//		this.holStatus = holStatus;
+//	}
 }
