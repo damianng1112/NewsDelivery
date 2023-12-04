@@ -1,5 +1,6 @@
 package newsAgent;
 
+<<<<<<< HEAD
 import junit.framework.TestCase;
 
 
@@ -9,10 +10,23 @@ public class NewsAgentTest extends TestCase {
 		// Test Objective: To create a News Agent Account
 		// Inputs: cus_id = "1", name = "DamianNg", address = "Athlone", Contact = "0871234567"
 		// Expected Output: News Agent Object created with cus_id = 1, "DamianNg", Addr
+=======
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class NewsAgentTest {
+
+	// Test #: 1
+		// Test Objective: To create a News Agent Account
+		// Inputs: cus_id = "1", name = "Damian", address = "Athlone", Contact = "0871234567"
+		// Expected Output: News Agent Object created with cus_id = 1, "Damian", Addr
+>>>>>>> main
 		// = "Athlone", Contact = "0871234567"
 
 		public void testNewsAgent001() {
 
+<<<<<<< HEAD
 			NewsAgent NAObj = null;
 			
 			try {
@@ -23,6 +37,20 @@ public class NewsAgentTest extends TestCase {
 				// Use getters to check for object creation
 				assertEquals(1, NAObj.getCus_id());
 				assertEquals("DamianNg", NAObj.getNa_name());
+=======
+			// Create the Customer Object
+
+			NewsAgent NAObj = null;
+
+			try {
+
+				// Call method under test
+				NAObj = new NewsAgent(1, "Damian", "Athlone", "0871234567");
+
+				// Use getters to check for object creation
+				assertEquals(1, NAObj.getCus_id());
+				assertEquals("Damian", NAObj.getNa_name());
+>>>>>>> main
 				assertEquals("Athlone", NAObj.getNa_address());
 				assertEquals("0871234567", NAObj.getNa_number());
 
@@ -34,6 +62,7 @@ public class NewsAgentTest extends TestCase {
 		}
 		
 		// Test #: 2
+<<<<<<< HEAD
 		// Test Objective: To catch an invalid News Agent Name
 		// Inputs: name = "D"
 		// Expected Output: Exception Message: "News Agent Name does not meet
@@ -48,10 +77,31 @@ public class NewsAgentTest extends TestCase {
 		        // TODO Auto-generated catch block
 		        assertEquals("News Agent name does not meet minimum length requirements", e.getMessage());
 		    }
+=======
+		// Test Objective: To catch a invalid News Agent Name
+		// Inputs: name = "D"
+		// Expected Output: Exception Message: "News Agent Name does not meet
+		// minimum length requirements"
+
+		public void validateNewsAgent_Name() {
+
+			try {
+
+				// Call method under test
+				NewsAgent.validateNAName("D");
+				fail("Exception expected");
+			} catch (NewsAgentExceptionHandler e) {
+				// TODO Auto-generated catch block
+				assertEquals("News Agent Name does not meet minimum length requirements", e.getMessage());
+
+			}
+
+>>>>>>> main
 		}
 		
 		// Test #: 3
 		// Test Objective: To catch a invalid News Agent Name
+<<<<<<< HEAD
 		// Inputs: name = "123Damian"
 		// Expected Output: Exception Message: "News Agent name CANNOT have number"
 
@@ -76,19 +126,35 @@ public class NewsAgentTest extends TestCase {
 		// maximum length requirements"
 
 		public void testValidateNAName003() {
+=======
+		// Inputs: name = "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+		// Expected Output: Exception Message: "News Agent Name does not exceeds
+		// maximum length requirements"
+
+		public void validateNewsAgent_Name002() {
+>>>>>>> main
 
 			try {
 
 				// Call method under test
+<<<<<<< HEAD
 				NewsAgent.validateNAName("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
 				fail("Exception expected");
 			} catch (NewsAgentExceptionHandler e) {
 				// TODO Auto-generated catch block
 				assertEquals("News Agent name exceeds maximum length requirements", e.getMessage());
+=======
+				NewsAgent.validateNAName("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+				fail("Exception expected");
+			} catch (NewsAgentExceptionHandler e) {
+				// TODO Auto-generated catch block
+				assertEquals("News Agent name exceeds max length requirements", e.getMessage());
+>>>>>>> main
 
 			}
 		}
 		
+<<<<<<< HEAD
 		// Test #: 5
 		// Test Objective: To catch a invalid News Agent Name
 		// Inputs: name = ""
@@ -254,5 +320,8 @@ public class NewsAgentTest extends TestCase {
 	            fail("Exception not expected for a valid address");
 	        }
 	    }
+=======
+		
+>>>>>>> main
 
 }

@@ -8,6 +8,7 @@ public class MySQLAccess{
 	static Statement stmt = null;
 	static ResultSet rs = null;
 		
+<<<<<<< HEAD
 	final private String host ="localhost:3306";
 	final private String user = "root";
 	final private String password = "";
@@ -28,6 +29,18 @@ public class MySQLAccess{
 		
 		
 }
+=======
+	public static void init_db(){
+		try{
+			String url="jdbc:mysql://localhost:3306/newsagentdb";
+			con = DriverManager.getConnection(url, "root", "");
+			System.out.println("Success");
+			stmt = con.createStatement();
+		}catch(Exception e){
+			System.out.println("Error: Failed to connect to database\n" + e.getMessage());
+		}
+	}
+>>>>>>> main
 	
 	public boolean insertCustomerDetailsAccount(NewsAgent c) {
 		
@@ -38,12 +51,20 @@ public class MySQLAccess{
 		try {
 		
 			//Create prepared statement to issue SQL query to the database
+<<<<<<< HEAD
 			pstmt = con.prepareStatement("insert into newsagentdb.customer values (default, ?, ?, ?,?,?)");
 			pstmt.setString(1, c.getCus_name());
 			pstmt.setString(2, c.getCus_address());
 			pstmt.setString(3, c.getCus_number());
 			pstmt.setString(4, c.getCus_town());
 			pstmt.setString(5, c.getPublication());
+=======
+			pstmt = con.prepareStatement("insert into newagentdb.customer values (default, ?, ?, ?,?,?)");
+			pstmt.setString(1, c.getCus_name());
+			pstmt.setString(2, c.getCus_address());
+			pstmt.setString(3, c.getCus_number());
+			pstmt.setString(4, c.getPublication());
+>>>>>>> main
 
 			pstmt.executeUpdate();
 		
@@ -63,7 +84,11 @@ public class MySQLAccess{
 	
 		try {
 			stmt = con.createStatement();
+<<<<<<< HEAD
 			rs = stmt.executeQuery("Select * from newsagentdb.newsagent");
+=======
+			rs = stmt.executeQuery("Select * from newsagentdb.customer");
+>>>>>>> main
 		
 		}
 		catch (Exception e) {
@@ -72,6 +97,7 @@ public class MySQLAccess{
 		return rs;
 	}
 	
+<<<<<<< HEAD
 	public boolean updateCustomerById(int custId) {
 		
 		boolean updateSuccessful = true;
@@ -80,6 +106,15 @@ public class MySQLAccess{
 		try {
 			//Create prepared statement to issue SQL query to the database
 			pstmt = con.prepareStatement("update from newsagentdb.customer where id = " + custId);
+=======
+	public boolean updateCustomerById(int custID) {
+		boolean updateSuccessful = true;
+		
+		//Add Code here to call embedded SQL to update Customer into DB
+		try {
+			//Create prepared statement to issue SQL query to the database
+			pstmt = con.prepareStatement("update from newsagentdb.customer where id = " + custID);
+>>>>>>> main
 			pstmt.executeUpdate();
 		 
 		}
@@ -94,7 +129,11 @@ public class MySQLAccess{
 
 		boolean deleteSucessfull = true;
 		
+<<<<<<< HEAD
 		//Add Code here to call embedded SQL to insert Customer into DB
+=======
+		//Add Code here to call embedded SQL to delete Customer
+>>>>>>> main
 		
 		try {
 			

@@ -1,4 +1,4 @@
-package userInterface;
+package login;
 import java.util.Scanner;
 
 public class LoginActivity {

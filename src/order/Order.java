@@ -1,5 +1,6 @@
 package order;
 
+<<<<<<< HEAD
 import java.math.BigInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -136,5 +137,19 @@ public class Order {
 		else if (publication.length() > 25)
 			throw new OrderExceptionHandler("Publication exceeds maximum length requirements");
 	}
+=======
+public class Order {
+	private int ord_id;
+	private int cus_id;
+	private String cus_name;
+	private String cus_address;
+	private String cus_number;
+	private String publication;
+	
+	public void createOrder() {
+		System.out.println("new model");
+	}
+	
+>>>>>>> main
 	
 }
