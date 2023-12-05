@@ -2,6 +2,7 @@ package publication;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class PublicationCommandLine {
@@ -14,6 +15,9 @@ public class PublicationCommandLine {
 		System.out.println("=============================================");
 		System.out.println("Please choose ONE of the following options:");
 		System.out.println("1. View ALL Publication Records");
+		System.out.println("2. Create a Publication Record");
+		System.out.println("3. Update a Publication Record");
+		System.out.println("4. Delete a Publication Record");
 		System.out.println("99. Close the NewsAgent Application");
 		System.out.println("=============================================");
 		System.out.println(" ");
@@ -35,10 +39,12 @@ public class PublicationCommandLine {
 			int id = rs.getInt("pub_id");
 			String name = rs.getString("pub_name");
 			double price = rs.getDouble("price");
+			String schedule = rs.getString("schedule");
 			
 			System.out.printf("%30s", id);
 			System.out.printf("%30s", name);
 			System.out.printf("%30s", price);
+			System.out.printf("%30s", schedule);
 			System.out.println();
 		}// end while
 		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
@@ -68,7 +74,7 @@ public class PublicationCommandLine {
 		
 				switch (functionNumber) {				
 				case "1": 
-					//Retrieve ALL Customer Records
+					//Retrieve ALL Publication Records
 					ResultSet rSet = dao.retrieveAllPublicationAccounts();
 					if (rSet == null) {
 						System.out.println("No Records Found");
@@ -79,8 +85,57 @@ public class PublicationCommandLine {
 						if (tablePrinted == true)
 							rSet.close();
 					}
-					break;
-			
+					break;	
+					
+				case "2":
+		            System.out.println("Enter Publication Name:");
+		            String name = keyboard.next();
+		            
+		            System.out.println("Enter price:");
+		            double price = keyboard.nextDouble();
+		            
+		            System.out.println("Enter Schedule:");
+		            String schedule = keyboard.next();
+		            try {
+		            	MySQLAccess CmySQLAccess = new MySQLAccess();
+		            	Publication publication = new Publication(name,price,schedule);
+		            	CmySQLAccess.insertPublicationDetailsAccount(publication);
+		                System.out.println("publication created successfully!");
+		            } catch (SQLException e) {
+		                System.out.println("Error occurred while creating Publication: " + e.getMessage());
+		            }
+		            break;
+				case "3":
+					System.out.println("Enter Publication Id:");
+		            String id = keyboard.next();
+		            
+					System.out.println("Enter Publication Name:");
+		            String newName = keyboard.next();
+		            
+		            System.out.println("Enter price:");
+		            double newPrice = keyboard.nextDouble();
+		            
+		          
+		            try {
+		            	MySQLAccess UmySQLAccess = new MySQLAccess();
+		            	UmySQLAccess.updatePublication(id, newName,newPrice);
+		                System.out.println("publication update successfully!");
+		            } catch (SQLException e) {
+		                System.out.println("Error occurred while updateing Publication: " + e.getMessage());
+		            }
+		            break;
+				case "4":
+					System.out.println("Enter Publication id to delete:");
+		            String pub_id = keyboard.next();
+
+		            try {
+		            	MySQLAccess DmySQLAccess = new MySQLAccess(); 
+		                DmySQLAccess.deletePublicationById(pub_id);
+		                System.out.println("Publication deleted successfully!");
+		            } catch (SQLException e) {
+		                System.out.println("Error occurred while deleting Publication: " + e.getMessage());
+		            }
+		            break;
 				case "99":
 					keepAppOpen = false;
 					System.out.println("Closing the Application");

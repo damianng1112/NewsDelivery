@@ -16,9 +16,9 @@ public class MySQLAccess {
 
     public MySQLAccess() {
         try {
-            String url = "jdbc:mysql://localhost:3306/newsagentdb";
+            String url = "jdbc:mysql://localhost:3307/newsagentdb";
             String user = "root";
-            String password = "";
+            String password = "123";
             this.connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             e.printStackTrace();  // Handle connection errors
@@ -41,19 +41,20 @@ public class MySQLAccess {
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
-            // Print table header
-            System.out.printf("%-20s %-20s %-15s %-15s%n", "Name", "Address");
-
-            // Print a line below the header
-            System.out.println(new String(new char[70]).replace("\0", "-"));
-
-            // Iterate through result set and print each row in a formatted way
+//            // Print table header
+        		System.out.printf("%-20s %-20s%n", "name", "address");
+//
+//            // Print a line below the header
+////            System.out.println(new String(new char[70]).replace("\0", "-"));
+//
+//            // Iterate through result set and print each row in a formatted way
             while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                String address = resultSet.getString("address");   
+            	// Inside your while loop
+            	String name = resultSet.getString("name");
+            	String address = resultSet.getString("address");   
 
-                // Print each customer's details in a tabular format
-                System.out.printf("%-20s %-20s %-15s %-15s%n", name, address);
+            	// Print each customer's details in a tabular format
+            	System.out.printf("%-20s %-20s%n", name, address);
             }
         } catch (SQLException e) {
             e.printStackTrace();

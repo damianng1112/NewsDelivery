@@ -62,7 +62,7 @@ public class CustomerTest extends TestCase {
 			fail("Exception expected");
 		} catch (CustomerExceptionHandler e) {
 			// TODO Auto-generated catch block
-			assertEquals("Customer Name does not exceeds maximum length requirements", e.getMessage());
+			assertEquals("Customer Name exceeds maximum length requirements", e.getMessage());
 
 		}
 
@@ -145,7 +145,7 @@ public class CustomerTest extends TestCase {
 			fail("Exception expected");
 		} catch (CustomerExceptionHandler e) {
 			// TODO Auto-generated catch block
-			assertEquals("Customer Address does not exceeds maximum length requirements", e.getMessage());
+			assertEquals("Customer Address exceeds maximum length requirements", e.getMessage());
 		}
 
 	}
@@ -206,7 +206,7 @@ public class CustomerTest extends TestCase {
 			fail("Exception expected");
 		} catch (CustomerExceptionHandler e) {
 			// TODO Auto-generated catch block
-			assertEquals("Customer ContactNumber does not exceeds maximum length requirements", e.getMessage());
+			assertEquals("Customer ContactNumber exceeds maximum length requirements", e.getMessage());
 		}
 
 	}
@@ -275,7 +275,7 @@ public class CustomerTest extends TestCase {
 	        Customer.validatePublication("Magazineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 	        fail("Exception expected");
 	    } catch (CustomerExceptionHandler e) {
-	        assertEquals("Customer Publication does not exceed maximum length requirements", e.getMessage());
+	        assertEquals("Customer Publication exceed maximum length requirements", e.getMessage());
 	    }
 	}
 	

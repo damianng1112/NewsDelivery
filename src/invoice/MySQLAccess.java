@@ -4,104 +4,99 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class MySQLAccess {
 	
-	private Connection connect = null;
-	private Statement statement = null;
-	private PreparedStatement preparedStatement = null;
-	private ResultSet resultSet = null;
+	private static Connection connection = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
 	
-	final private String host ="localhost:3307";
-	final private String user = "root";
-	final private String password = "123";
-	
-	
-	public MySQLAccess() throws Exception {
-		
-		try {
-			
-			//Load MySQL Driver
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			//Setup the connection with the DB
-			connect = DriverManager.getConnection("jdbc:mysql://" + host + "/newsagentdb?" + "user=" + user + "&password=" + password);
-		}
-		catch (Exception e) {
-			throw e;
-		}
-		
-		
-	}	
+    public static void init_db() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3307/newsagentdb?";
+            connection = DriverManager.getConnection(url, "root", "123");
+            stmt = connection.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	public boolean insertInvoiceDetailsAccount(Invoice invoice) {
-	
-		boolean insertSucessfull = true;
-	
-		//Add Code here to call embedded SQL to insert Customer into DB
-	
+	public void insertInvoiceDetailsAccount(Invoice invoice) throws SQLException {
 		try {
+            if (stmt == null) 
+                init_db(); 
+            }catch(Exception e) {
+            	e.printStackTrace();
+            }
+    	
+        String query = "INSERT INTO invoice(cus_id,pub_id,price) VALUES (?, ?, ?)";
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, invoice.getCus_id());
+            statement.setInt(2, invoice.getPub_id());
+            statement.setString(3,invoice.getPrice());
+            statement.executeUpdate();
+        }
 		
-			//Create prepared statement to issue SQL query to the database
-			preparedStatement = connect.prepareStatement("insert into newsagentdb.invoice values (default, ?, ?, ?,?,?)");
-			preparedStatement.setString(1, invoice.getCustomerName());
-			preparedStatement.setString(2, invoice.getAddress());
-			preparedStatement.setString(3, invoice.getNumber());
-			preparedStatement.setString(4, invoice.getPublication());
-			preparedStatement.setString(5, invoice.getPrice());
-			preparedStatement.executeUpdate();
-		
-	 
-		}
-		catch (Exception e) {
-			insertSucessfull = false;
-		}
-	
-		return insertSucessfull;
-		
-	}// end insertCustomerDetailsAccount
+	}// end insertInvoiceDetailsAccount
 
 	public ResultSet retrieveAllInvoiceAccounts() {
 		
-		//Add Code here to call embedded SQL to view Customer Details
-	
 		try {
-			statement = connect.createStatement();
-			resultSet = statement.executeQuery("Select * from newsagentdb.invoice");
+			if (stmt == null) {
+                init_db();
+            }
+			stmt = connection.createStatement();
+			rs= stmt.executeQuery("Select * from newsagentdb.invoice");
 		
 		}
 		catch (Exception e) {
-			resultSet = null;
+			rs = null;
 		}
-		return resultSet;
+		return rs;
 	}
 	
-	public boolean deleteInvoiceById(String invoiceID) {
+	public void deleteInvoiceById(int inv_id) throws SQLException {
 
-		boolean deleteSucessfull = true;
-		
-		//Add Code here to call embedded SQL to insert Customer into DB
-		
 		try {
-			
-			//Create prepared statement to issue SQL query to the database
-			if (invoiceID.equals("-99"))
-				//Delete all entries in Table
-				preparedStatement = connect.prepareStatement("delete from newsagentdb.invoice");
-			else
-				//Delete a particular Customer
-				preparedStatement = connect.prepareStatement("delete from newsagentdb.invoice where inv_id = " + invoiceID);
-			preparedStatement.executeUpdate();
-		 
-		}
-		catch (Exception e) {
-			deleteSucessfull = false;
-		}
-		
-		return deleteSucessfull;
+            if (stmt == null) 
+                init_db(); 
+            }catch(Exception e) {
+            	e.printStackTrace();
+            }
+    	
+        String query = "DELETE FROM invoice WHERE inv_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, inv_id);
+            statement.executeUpdate();
+        }
 		
 	}
+	public void updateInvoice(int id,int cus_id, int pub_id,String price) throws Exception {    
+		try {
+            if (stmt == null) 
+                init_db(); 
+            }catch(Exception e) {
+            	e.printStackTrace();
+            }
+    	
+        String query = "UPDATE invoice SET  cus_id = ?, pub_id = ?, price = ? WHERE inv_id = ?";
+        try{
+        	PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, cus_id);
+            statement.setInt(2, pub_id);
+            statement.setString(3, price);
+            statement.setInt(4, id);
+            statement.executeUpdate();
+        }catch(Exception e) {
+        	e.printStackTrace();
+        }
+        	 
+    }
+
+	
 
 
 }// end Class

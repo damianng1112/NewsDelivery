@@ -26,8 +26,8 @@ public class OrdCommandLine {
 	private static boolean printOrderTable(ResultSet rs) throws Exception {
 	    // Print the contents of the Full Order Table
 
-	    System.out.printf("%-10s%-15s%-20s%-25s%-20s%-15s%n",
-	            "Order ID", "Customer ID", "Customer Name", "Customer Address", "Customer Number", "Publication");
+	    System.out.printf("%-10s%-15s%-20s%-20s%-15s%-10s%-15s%n",
+	            "Order ID", "Customer ID", "Customer Name", "Customer Address", "Customer Number", "Publication", "Date");
 	    System.out.println("-------------------------------------------------------------------------------------------------");
 
 	    // Iterate through the result set
@@ -38,9 +38,10 @@ public class OrdCommandLine {
 	        String customerAddress = rs.getString("cus_address");
 	        String customerNumber = rs.getString("cus_number");
 	        String publication = rs.getString("publication");
+	        String date = rs.getString("date");
 
-	        System.out.printf("%-10d%-15s%-20s%-25s%-20s%-15s%n",
-	                orderId, customerId, customerName, customerAddress, customerNumber, publication);
+	        System.out.printf("%-10s%-15s%-20s%-20s%-15s%-10s%-15s%n",
+	                orderId, customerId, customerName, customerAddress, customerNumber, publication, date);
 	    }// end while
 	    System.out.println("-------------------------------------------------------------------------------------------------");
 
@@ -115,7 +116,7 @@ public class OrdCommandLine {
 					//Update Order Record by ID
 					System.out.println("Enter Order Id to be updated");
 					String updateOrdId = keyboard.next();
-					if (validateId(updateOrdId)) {
+					if (dao.validateId(updateOrdId)) {
 						System.out.printf("Enter Customer Id to be entered to order: \n");
 						String updateCustId = keyboard.next();
 						if (cusDAO.validateId(updateCustId)) {
@@ -136,6 +137,8 @@ public class OrdCommandLine {
 							}
 						}
 					
+					}else {
+						System.out.println("WHYYYYYYYYYYYYY");
 					}
 					break;
 

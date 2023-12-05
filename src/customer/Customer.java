@@ -68,8 +68,7 @@ public class Customer {
     }
 
     public static void validateCustomerName(String name) throws CustomerExceptionHandler {
-        // Agree Formatting Rules on "Customer Name"
-        // E.G. Name String must be a minimum of 2 characters and a maximum of 20 characters
+       
 
         if (name.isBlank() || name.isEmpty())
             throw new CustomerExceptionHandler("Customer Name NOT specified");
@@ -78,8 +77,7 @@ public class Customer {
     }
 
     public static void validateCustomerAddress(String address) throws CustomerExceptionHandler {
-        // Agree Formatting Rules on "Customer Address"
-        // E.G. Name String must be a minimum of 5 characters and a maximum of 40 characters
+        
 
         if (address.isBlank() || address.isEmpty())
             throw new CustomerExceptionHandler("Customer Address NOT specified");
@@ -88,8 +86,7 @@ public class Customer {
     }
 
     public static void validateCustomerPhoneNumber(String phoneNumber) throws CustomerExceptionHandler {
-        // Agree Formatting Rules on "Customer PhoneNumber"
-        // E.G. PhoneNumber String must be a minimum of 7 characters and a maximum of 15 characters
+         
 
         if (phoneNumber.isBlank() || phoneNumber.isEmpty())
             throw new CustomerExceptionHandler("Customer PhoneNumber NOT specified");

@@ -19,7 +19,7 @@ public class aCommandLine {
             System.out.println("Invalid login. Exiting program.");
         }
 
-        scanner.close();
+//        scanner.close();
         try {
             dbAccess.closeConnection();
         } catch (SQLException e) {
@@ -42,9 +42,9 @@ public class aCommandLine {
             System.out.println("Main Menu:");
             System.out.println("1. Create Newsagent");
             System.out.println("2. View All Newsagent");
-            System.out.println("2. Update Newsagent");
-            System.out.println("3. Delete Newsagent");
-            System.out.println("4. Exit");
+            System.out.println("3. Update Newsagent");
+            System.out.println("4. Delete Newsagent");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();

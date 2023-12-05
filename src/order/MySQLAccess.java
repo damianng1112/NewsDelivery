@@ -15,9 +15,9 @@ public class MySQLAccess{
 	static Statement stmt = null;
 	static ResultSet rs = null;
 	
-	final private String host ="localhost:3306";
+	final private String host ="localhost:3307";
 	final private String user = "root";
-	final private String password = "";
+	final private String password = "123";
 		
 	public MySQLAccess() throws Exception {
 		
@@ -87,14 +87,14 @@ public boolean insertOrderDetails(Order o) {
 		try {
 			//Create prepared statement to issue SQL query to the database
 			pstmt = con.prepareStatement("update newsagentdb.order set cus_id = ?, cus_name=?, cus_address=?, cus_number=?, "
-					+ "publication=?, date=? where id = ?");
+					+ "publication=?, date=? where ord_id = ?");
 			pstmt.setString(1, o.getCus_id());
 			pstmt.setString(2, o.getCus_name());
 			pstmt.setString(3, o.getCus_address());
 			pstmt.setString(4, o.getCus_number());
 			pstmt.setString(5, o.getPublication());
 			pstmt.setString(6, o.getDate());
-			pstmt.setString(7, o.getOrd_id());
+			pstmt.setString(7, ordId);
 			pstmt.executeUpdate();
 		 
 		}
@@ -119,7 +119,7 @@ public boolean insertOrderDetails(Order o) {
 				pstmt = con.prepareStatement("delete from newsagentdb.order");
 			else
 				//Delete a particular order
-				pstmt = con.prepareStatement("delete from newsagentdb.order where id = " + ordID);
+				pstmt = con.prepareStatement("delete from newsagentdb.order where ord_id = " + ordID);
 			pstmt.executeUpdate();
 		 
 		}
@@ -133,7 +133,7 @@ public boolean insertOrderDetails(Order o) {
 	
     public boolean validateId(String id) {
         // SQL query to check the id 
-        String query = "SELECT ord_id FROM order";
+        String query = "SELECT ord_id FROM newsagentdb.order";
         boolean res = false;
         try{
         	PreparedStatement statement = con.prepareStatement(query);
@@ -157,7 +157,7 @@ public boolean insertOrderDetails(Order o) {
     }
     
     public ResultSet readOrderById(String id) throws SQLException {
-        String query = "SELECT * FROM order where id = "+id;
+        String query = "SELECT * FROM newsagentdb.order where ord_id = "+id;
         try {
         	Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(query);

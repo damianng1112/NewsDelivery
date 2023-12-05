@@ -10,9 +10,9 @@ public class MySQLAccess{
 	static Statement stmt = null;
 	static ResultSet rs = null;
 		
-	final private String host ="localhost:3306";
+	final private String host ="localhost:3307";
 	final private String user = "root";
-	final private String password = "";
+	final private String password = "123";
 		
 	public MySQLAccess() throws Exception {
 		
@@ -30,22 +30,12 @@ public class MySQLAccess{
 		
 		
 }
-	public static void init_db(){
-		try{
-			String url="jdbc:mysql://localhost:3306/newsagentdb";
-			con = DriverManager.getConnection(url, "root", "");
-			System.out.println("Success");
-			stmt = con.createStatement();
-		}catch(Exception e){
-			System.out.println("Error: Failed to connect to database\n" + e.getMessage());
-		}
-	}
-	
+ 
 	public boolean insertCustomerDetailsAccount(Customer custObj) throws Exception{
 		
 		boolean insertSucessfull = true;
 	
-		//Add Code here to call embedded SQL to insert Customer into DB
+		 
 	
 		try {
 		

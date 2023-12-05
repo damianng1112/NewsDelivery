@@ -142,6 +142,31 @@ public class MySQLAccess {
 
         return res;
     }
+	
+	public boolean validatePub(String pub) {
+        // SQL query to check the id 
+        String query = "SELECT * FROM publication";
+        boolean res = false;
+        try{
+        	PreparedStatement statement = connect.prepareStatement(query);
+            // Executing the query
+            ResultSet rs = statement.executeQuery();
+
+            // Checking if the user exists
+            while(rs.next()) {
+            	String dbName = rs.getString("pub_name");
+            	if (dbName.equals(pub)) {
+            		res = true;
+            		break;
+            	}
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return res;
+    }
 
 
 }// end Class

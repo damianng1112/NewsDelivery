@@ -8,6 +8,8 @@ import customer.Customer;
 import publication.Publication;
 import publication.PublicationCommandLine;
 
+import deliveryPerson.*;
+
 
 public class NaCommandLine {
 	
@@ -26,6 +28,7 @@ private static void listNewsAgentFuctionalityAvailable() {
 		System.out.println("6. View ALL Publication");
 		System.out.println("7. Update Publication");
 		System.out.println("8. Delete Publication");
+		System.out.println("9. CRUD DeliveryPerson");	 
 		System.out.println("99.Close the NewsAgent Application");
 		System.out.println("=============================================");
 		System.out.println(" ");
@@ -89,17 +92,30 @@ public static void show() {
 				String custAddr = keyboard.next();
 				System.out.printf("Enter Customer PhoneNumber: \n");
 				String custphoneNumber = keyboard.next();
-				System.out.printf("Enter Customer Publication: \n");
+				ResultSet pubRSet = pubDAO.retrieveAllPublicationAccounts();
+				if (pubRSet == null) {
+					System.out.println("No Records Found");
+					break;
+				}
+				else {
+					boolean tablePrinted = PublicationCommandLine.printPublicationTable(pubRSet);
+					if (tablePrinted == true)
+						pubRSet.close();
+				}
+				System.out.printf("Enter Customer Publication of choice: \n");
 				String custPub = keyboard.next();
 				
-				Customer custObj = new Customer(custName,custAddr,custphoneNumber, custPub);
-			
-				//Insert Customer Details into the database
-				boolean insertResult = dao.insertCustomerDetailsAccount(custObj);
-				if (insertResult == true)
-					System.out.println("Customer Details Saved");
-				else 
-					System.out.println("ERROR: Customer Details NOT Saved");
+				if (pubDAO.validatePub(custPub)) {
+					Customer custObj = new Customer(custName,custAddr,custphoneNumber, custPub);
+					//Insert Customer Details into the database
+					boolean insertResult = dao.insertCustomerDetailsAccount(custObj);
+					if (insertResult == true)
+						System.out.println("Customer Details Saved");
+					else 
+						System.out.println("ERROR: Customer Details NOT Saved");
+				}else {
+					System.out.println("Publication does not exist");
+				}
 				break;
 //				//Get Customer Details from the User
 //				System.out.printf("Enter Customer Name: \n");
@@ -138,21 +154,34 @@ public static void show() {
 				System.out.println("Enter Customer Id to be updated");
 				String updateCustId = keyboard.next();
 				if (dao.validateId(updateCustId)) {
-					System.out.printf("Enter Customer Name: \n");
+					System.out.printf("Enter Customer New Name: \n");
 					String newName = keyboard.next();
-					System.out.printf("Enter Customer Address: \n");
+					System.out.printf("Enter Customer New Address: \n");
 					String newAddr = keyboard.next();
-					System.out.printf("Enter Customer PhoneNumber: \n");
+					System.out.printf("Enter Customer New PhoneNumber: \n");
 					String newPhoneNumber = keyboard.next();
-					System.out.printf("Enter Customer Publication: \n");
+					ResultSet pub11RSet = pubDAO.retrieveAllPublicationAccounts();
+					if (pub11RSet == null) {
+						System.out.println("No Records Found");
+						break;
+					}
+					else {
+						boolean tablePrinted = PublicationCommandLine.printPublicationTable(pub11RSet);
+						if (tablePrinted == true)
+							pub11RSet.close();
+					}
+					System.out.printf("Enter Customer New Publication of choice: \n");
 					String newPub = keyboard.next();
-					boolean updateResult = dao.updateCustomerById(updateCustId, newName, newAddr, newPhoneNumber, newPub);
-					if(updateResult==true)
-						System.out.println("Customer Updated");
-					else 
-						System.out.println("ERROR: Customer Details NOT updated");
-				}else {
+					if (pubDAO.validatePub(newPub)) {
+						boolean updateResult = dao.updateCustomerById(updateCustId, newName, newAddr, newPhoneNumber, newPub);
+						if(updateResult==true)
+							System.out.println("Customer Updated");
+						else 
+							System.out.println("ERROR: Customer Details NOT updated");
+						}
+					else {
 					System.out.println("Customer Id don't Exist");
+					}
 				}
 				break;
 				
@@ -187,15 +216,15 @@ public static void show() {
 				
 			case "6":
 				//Get All Publication
-				ResultSet pubRSet = pubDAO.retrieveAllPublicationAccounts();
-				if (pubRSet == null) {
+				ResultSet pubR2Set = pubDAO.retrieveAllPublicationAccounts();
+				if (pubR2Set == null) {
 					System.out.println("No Records Found");
 					break;
 				}
 				else {
-					boolean tablePrinted = PublicationCommandLine.printPublicationTable(pubRSet);
+					boolean tablePrinted = PublicationCommandLine.printPublicationTable(pubR2Set);
 					if (tablePrinted == true)
-						pubRSet.close();
+						pubR2Set.close();
 				}
 				break;
 				
@@ -228,7 +257,9 @@ public static void show() {
 				else 
 					System.out.println("ERROR: Publication Details NOT Deleted or Do Not Exist");
 				break;
-				
+			case"9":
+				deliveryPerson.DeliveryPersonCommandLine.DeliveryPerson();
+				break;				
 			case "99":
 				keepAppOpen = false;
 				break;

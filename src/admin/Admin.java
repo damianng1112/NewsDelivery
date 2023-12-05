@@ -50,7 +50,7 @@ public class Admin {
 	}
     
 	
-	public void validateAdminUsername(String adminUsername) throws AdminExceptionHandler {
+	public static void validateAdminUsername(String adminUsername) throws AdminExceptionHandler {
 		
 		if (adminUsername.isEmpty() || adminUsername.isEmpty()) 
 			throw new AdminExceptionHandler ("Admin username NOT specified");
@@ -62,7 +62,7 @@ public class Admin {
 	}
 	
 
-	public void validateAdminPassword(String adminPassword) throws AdminExceptionHandler {
+	public static void validateAdminPassword(String adminPassword) throws AdminExceptionHandler {
 		
 		if (adminPassword.isEmpty() || adminPassword.isEmpty()) 
 			throw new AdminExceptionHandler ("Admin password NOT specified");
