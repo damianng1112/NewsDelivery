@@ -2,15 +2,10 @@ package order;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-<<<<<<< HEAD
 import java.sql.PreparedStatement;
-=======
->>>>>>> main
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-<<<<<<< HEAD
 import newsAgent.NewsAgent;
 
 
@@ -50,12 +45,13 @@ public boolean insertOrderDetails(Order o) {
 		try {
 		
 			//Create prepared statement to issue SQL query to the database
-			pstmt = con.prepareStatement("insert into newsagentdb.order values (default, ?, ?, ?,?,?)");
+			pstmt = con.prepareStatement("insert into newsagentdb.order values (default, ?, ?, ?,?,?, ?)");
 			pstmt.setString(1, o.getCus_id());
 			pstmt.setString(2, o.getCus_name());
 			pstmt.setString(3, o.getCus_address());
 			pstmt.setString(4, o.getCus_number());
 			pstmt.setString(5, o.getPublication());
+			pstmt.setString(6, o.getDate());
 
 			pstmt.executeUpdate();
 		
@@ -84,14 +80,21 @@ public boolean insertOrderDetails(Order o) {
 		return rs;
 	}
 
-	public boolean updateOrderById(int ordId) {
-		
+	public boolean updateOrderById(Order o, String ordId) {
 		boolean updateSuccessful = true;
 		
-		//Add Code here to call embedded SQL to update order into DB
+		//Add Code here to call embedded SQL to update Customer into DB
 		try {
 			//Create prepared statement to issue SQL query to the database
-			pstmt = con.prepareStatement("update from newsagentdb.order where id = " + ordId);
+			pstmt = con.prepareStatement("update newsagentdb.order set cus_id = ?, cus_name=?, cus_address=?, cus_number=?, "
+					+ "publication=?, date=? where id = ?");
+			pstmt.setString(1, o.getCus_id());
+			pstmt.setString(2, o.getCus_name());
+			pstmt.setString(3, o.getCus_address());
+			pstmt.setString(4, o.getCus_number());
+			pstmt.setString(5, o.getPublication());
+			pstmt.setString(6, o.getDate());
+			pstmt.setString(7, o.getOrd_id());
 			pstmt.executeUpdate();
 		 
 		}
@@ -128,22 +131,43 @@ public boolean insertOrderDetails(Order o) {
 	
 	}
 	
-=======
+    public boolean validateId(String id) {
+        // SQL query to check the id 
+        String query = "SELECT ord_id FROM order";
+        boolean res = false;
+        try{
+        	PreparedStatement statement = con.prepareStatement(query);
+            // Executing the query
+            ResultSet rs = statement.executeQuery();
 
-public class MySQLAccess{
-	static Connection con = null;
-	static Statement stmt = null;
-	static ResultSet rs = null;
-		
-	public static void init_db(){
-		try{
-			String url="jdbc:mysql://localhost:3306/newsdelivery";
-			con = DriverManager.getConnection(url, "root", "");
-			System.out.println("Success");
-			stmt = con.createStatement();
-		}catch(Exception e){
-			System.out.println("Error: Failed to connect to database\n" + e.getMessage());
-		}
-	}
->>>>>>> main
+            // Checking if the order exists
+            while(rs.next()) {
+            	String dbId = rs.getString("ord_id");
+            	if (dbId.equals(id)) {
+            		res = true;
+            		break;
+            	}
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return res;
+    }
+    
+    public ResultSet readOrderById(String id) throws SQLException {
+        String query = "SELECT * FROM order where id = "+id;
+        try {
+        	Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            return resultSet;	 
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+
 }

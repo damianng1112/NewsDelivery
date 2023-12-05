@@ -14,9 +14,9 @@ public class MySQLAccess {
 
 	    public MySQLAccess() {
 	        try {
-	            String url = "jdbc:mysql://localhost:3307/newsagentdb";
+	            String url = "jdbc:mysql://localhost:3306/newsagentdb";
 	            String user = "root";
-	            String password = "123";
+	            String password = "";
 	            this.connection = DriverManager.getConnection(url, user, password);
 	        } catch (SQLException e) {
 	            e.printStackTrace();  //  
@@ -25,7 +25,8 @@ public class MySQLAccess {
 	    
 
 	    // Method to create a newsagent
-	    public void createCustomer(String name, String address,String phoneNo,String publicaion) throws SQLException {
+	    public boolean createCustomer(String name, String address,String phoneNo,String publicaion) throws SQLException {
+	    	boolean createSuccess = true;
 	        String query = "insert into customerdetails(name,address,phoneNo,publication) values (?, ?, ?,?)";
 	        try (PreparedStatement statement = connection.prepareStatement(query)) {
 	            statement.setString(1, name);
@@ -33,7 +34,10 @@ public class MySQLAccess {
 	            statement.setString(3, phoneNo);
 	            statement.setString(4, publicaion);
 	            statement.executeUpdate();
+	        }catch(Exception e) {
+	        	createSuccess = false;
 	        }
+	        return createSuccess;
 	    }
 	    
 	    public void readAllCustomers() throws SQLException {
@@ -117,6 +121,31 @@ public class MySQLAccess {
 	        return res;
 	    }
 	    
+	    public boolean validateId(String id) {
+	        // SQL query to check the id 
+	        String query = "SELECT cus_id FROM customerdetails";
+	        boolean res = false;
+	        try{
+	        	PreparedStatement statement = connection.prepareStatement(query);
+	            // Executing the query
+	            ResultSet rs = statement.executeQuery();
+
+	            // Checking if the user exists
+	            while(rs.next()) {
+	            	String dbId = rs.getString("cus_id");
+	            	if (dbId.equals(id)) {
+	            		res = true;
+	            		break;
+	            	}
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+
+	        }
+
+	        return res;
+	    }
+	    
 //	    public boolean validateAdminLogin(String name, String password) {
 //	        // SQL query to check the username and password
 //	        String query = "SELECT COUNT(*) FROM admin WHERE admin_name = ? AND admin_password = ?";
@@ -146,6 +175,19 @@ public class MySQLAccess {
 	    public void closeConnection() throws SQLException {
 	        if (connection != null && !connection.isClosed()) {
 	            connection.close();
+	        }
+	    }
+	    
+	    public ResultSet readCustomerById(String id) throws SQLException {
+	        String query = "SELECT * FROM customerdetails where id = "+id;
+	        try {
+	        	Statement statement = connection.createStatement();
+	            ResultSet resultSet = statement.executeQuery(query);
+	            return resultSet;	 
+	            
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            throw e;
 	        }
 	    }
 

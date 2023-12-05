@@ -16,9 +16,9 @@ public class MySQLAccess {
 
     public MySQLAccess() {
         try {
-            String url = "jdbc:mysql://localhost:3307/newsagentdb";
+            String url = "jdbc:mysql://localhost:3306/newsagentdb";
             String user = "root";
-            String password = "123";
+            String password = "";
             this.connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             e.printStackTrace();  // Handle connection errors

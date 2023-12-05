@@ -4,13 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Scanner;
 
-<<<<<<< HEAD
-=======
-import Customer.Customer;
-import Customer.MySQLAccess;
-import index.Managerindex;
+import customer.Customer;
+import publication.Publication;
+import publication.PublicationCommandLine;
 
->>>>>>> main
 
 public class NaCommandLine {
 	
@@ -25,6 +22,10 @@ private static void listNewsAgentFuctionalityAvailable() {
 		System.out.println("2. View ALL Customer Records");
 		System.out.println("3. Update Customer Records");
 		System.out.println("4. Delete Customer Record by ID");
+		System.out.println("5. Create Publication");
+		System.out.println("6. View ALL Publication");
+		System.out.println("7. Update Publication");
+		System.out.println("8. Delete Publication");
 		System.out.println("99.Close the NewsAgent Application");
 		System.out.println("=============================================");
 		System.out.println(" ");
@@ -35,8 +36,8 @@ private static boolean printCustomerTable(ResultSet rs) throws Exception {
 	
 	//Print The Contents of the Full Customer Table
 	
-	System.out.printf("%-5s%-20s%-30s%-15s%-15s%-15s%n",
-            "ID", "Name", "Address", "Phone Number", "Town", "Publication");
+	System.out.printf("%-5s%-20s%-35s%-20s%-20s%n",
+            "ID", "Name", "Address", "Phone Number", "Publication");
     System.out.println("--------------------------------------------------------------");
 
     // Iterate through the result set
@@ -45,11 +46,10 @@ private static boolean printCustomerTable(ResultSet rs) throws Exception {
         String name = rs.getString("name");
         String address = rs.getString("address");
         String phoneNo = rs.getString("phoneNo");
-        String town = rs.getString("town");
         String publication = rs.getString("publication");
 
-        System.out.printf("%-5d%-20s%-30s%-15s%-15s%-15s%n",
-                cusId, name, address, phoneNo, town, publication);
+        System.out.printf("%-5d%-20s%-35s%-20s%-20s%n",
+                cusId, name, address, phoneNo, publication);
     
 	}// end while
     System.out.println("--------------------------------------------------------------");
@@ -58,13 +58,15 @@ private static boolean printCustomerTable(ResultSet rs) throws Exception {
 	
 }
 
-public void show() {
+public static void show() {
 	
 	//Create the Database Object
 	
 	try {
 		
 		MySQLAccess dao = new MySQLAccess();
+		publication.MySQLAccess pubDAO = new publication.MySQLAccess();
+		customer.MySQLAccess custDAO = new customer.MySQLAccess();
 	
 		// Configure System for Running
 		Scanner keyboard = new Scanner(System.in); 
@@ -87,16 +89,10 @@ public void show() {
 				String custAddr = keyboard.next();
 				System.out.printf("Enter Customer PhoneNumber: \n");
 				String custphoneNumber = keyboard.next();
-				System.out.printf("Enter Customer Area: \n");
-				String custArea = keyboard.next();
 				System.out.printf("Enter Customer Publication: \n");
 				String custPub = keyboard.next();
 				
-<<<<<<< HEAD
-				Customer custObj = new Customer(custName,custAddr,custphoneNumber,custArea, custPub);
-=======
-				Customer custObj = new Customer(custName,custAddr,custphoneNumber,custArea);
->>>>>>> main
+				Customer custObj = new Customer(custName,custAddr,custphoneNumber, custPub);
 			
 				//Insert Customer Details into the database
 				boolean insertResult = dao.insertCustomerDetailsAccount(custObj);
@@ -105,6 +101,23 @@ public void show() {
 				else 
 					System.out.println("ERROR: Customer Details NOT Saved");
 				break;
+//				//Get Customer Details from the User
+//				System.out.printf("Enter Customer Name: \n");
+//				String custName = keyboard.next();
+//				System.out.printf("Enter Customer Address: \n");
+//				String custAddr = keyboard.next();
+//				System.out.printf("Enter Customer PhoneNumber: \n");
+//				String custphoneNumber = keyboard.next();
+//				System.out.printf("Enter Customer Publication: \n");
+//				String custPub = keyboard.next();
+//							
+//				//Insert Customer Details into the database
+//				boolean insertResult = custDAO.createCustomer(custName,custAddr,custphoneNumber, custPub);
+//				if (insertResult == true)
+//					System.out.println("Customer Details Saved");
+//				else 
+//					System.out.println("ERROR: Customer Details NOT Saved");
+//				break;
 				
 			case "2": 
 				//Retrieve ALL Customer Records
@@ -124,15 +137,23 @@ public void show() {
 				//Update Customer Record by ID
 				System.out.println("Enter Customer Id to be updated");
 				String updateCustId = keyboard.next();
-				boolean updateResult = dao.updateCustomerById(Integer.parseInt(updateCustId));
-<<<<<<< HEAD
-				if (updateResult==true)
-=======
-				if(updateResult==true)
->>>>>>> main
-					System.out.println("Customer Updated");
-				else 
-					System.out.println("ERROR: Customer Details NOT updated or Do Not Exist");
+				if (dao.validateId(updateCustId)) {
+					System.out.printf("Enter Customer Name: \n");
+					String newName = keyboard.next();
+					System.out.printf("Enter Customer Address: \n");
+					String newAddr = keyboard.next();
+					System.out.printf("Enter Customer PhoneNumber: \n");
+					String newPhoneNumber = keyboard.next();
+					System.out.printf("Enter Customer Publication: \n");
+					String newPub = keyboard.next();
+					boolean updateResult = dao.updateCustomerById(updateCustId, newName, newAddr, newPhoneNumber, newPub);
+					if(updateResult==true)
+						System.out.println("Customer Updated");
+					else 
+						System.out.println("ERROR: Customer Details NOT updated");
+				}else {
+					System.out.println("Customer Id don't Exist");
+				}
 				break;
 				
 			case "4":
@@ -146,12 +167,68 @@ public void show() {
 					System.out.println("Customer Deleted");
 				else 
 					System.out.println("ERROR: Customer Details NOT Deleted or Do Not Exist");
-				break;
-<<<<<<< HEAD
-		
-=======
+				break;	
+			
+			case "5":
+				//Create Publication
+				System.out.printf("Enter Publication Name: \n");
+				String pubName = keyboard.next();
+				System.out.printf("Enter Publication Price: \n");
+				Double price = keyboard.nextDouble();
+				Publication pubObj = new Publication(pubName, price);
 				
->>>>>>> main
+				//Insert Publication Details into the database
+				boolean insertPubResult = pubDAO.insertPublicationDetailsAccount(pubObj);
+				if (insertPubResult == true)
+					System.out.println("Publication Details Saved");
+				else 
+					System.out.println("ERROR: Publication Details NOT Saved");
+				break;
+				
+			case "6":
+				//Get All Publication
+				ResultSet pubRSet = pubDAO.retrieveAllPublicationAccounts();
+				if (pubRSet == null) {
+					System.out.println("No Records Found");
+					break;
+				}
+				else {
+					boolean tablePrinted = PublicationCommandLine.printPublicationTable(pubRSet);
+					if (tablePrinted == true)
+						pubRSet.close();
+				}
+				break;
+				
+			case "7":
+				//update publication
+				System.out.println("Enter publication Id to be updated");
+				String updatePubId = keyboard.next();
+				if (pubDAO.validateId(updatePubId)) {
+					System.out.printf("Enter Publication Name: \n");
+					String pubNewName = keyboard.next();
+					System.out.printf("Enter Publication Price: \n");
+					Double newPrice = keyboard.nextDouble();
+					boolean updatePubRes = pubDAO.updatePublication(updatePubId, pubNewName, newPrice);
+					if (updatePubRes==true)
+						System.out.println("Update Publication Success");
+					else
+						System.out.println("Fail to update Publication");
+				}
+				break;
+				
+			case "8":
+				//delete publication
+				System.out.println("Enter publication Id to be deleted or -99 to Clear all Rows");
+				String deletePubId = keyboard.next();
+				boolean deletePubResult = pubDAO.deletePublicationById(deletePubId);
+				if ((deletePubResult == true) && (deletePubId.equals("-99")))
+					System.out.println("Publication Table Emptied");
+				else if (deletePubResult == true)
+					System.out.println("Publication Deleted");
+				else 
+					System.out.println("ERROR: Publication Details NOT Deleted or Do Not Exist");
+				break;
+				
 			case "99":
 				keepAppOpen = false;
 				break;
@@ -174,5 +251,8 @@ public void show() {
 	
 
 } // end main
+public static void main (String[] args) {
+	show();
+}
 
 }

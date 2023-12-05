@@ -65,7 +65,8 @@ CREATE TABLE `order` (
   `cus_name` varchar(15) NOT NULL,
   `cus_address` varchar(15) NOT NULL,  
   `cus_number` varchar(15) NOT NULL,
-  `publication` varchar(15) NOT NULL
+  `publication` varchar(15) NOT NULL,
+  `date` varchar(30) NOT NULL
 )AUTO_INCREMENT=1;
 
 

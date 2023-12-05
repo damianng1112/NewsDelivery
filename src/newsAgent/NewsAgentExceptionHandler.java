@@ -10,9 +10,6 @@ public class NewsAgentExceptionHandler extends Exception {
 	public String getMessage() {
 		return message;
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> main
 }
 

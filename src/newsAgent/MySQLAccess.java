@@ -2,6 +2,8 @@ package newsAgent;
 
 import java.sql.*;
 
+import customer.Customer;
+
 public class MySQLAccess{
 	private PreparedStatement pstmt = null;
 	static Connection con = null;
@@ -39,7 +41,7 @@ public class MySQLAccess{
 		}
 	}
 	
-	public boolean insertCustomerDetailsAccount(NewsAgent c) throws Exception{
+	public boolean insertCustomerDetailsAccount(Customer custObj) throws Exception{
 		
 		boolean insertSucessfull = true;
 	
@@ -48,12 +50,11 @@ public class MySQLAccess{
 		try {
 		
 			//Create prepared statement to issue SQL query to the database
-			pstmt = con.prepareStatement("insert into newsagentdb.customer values (default, ?, ?, ?,?,?)");
-			pstmt.setString(1, c.getCus_name());
-			pstmt.setString(2, c.getCus_address());
-			pstmt.setString(3, c.getCus_number());
-			pstmt.setString(4, c.getCus_town());
-			pstmt.setString(5, c.getPublication());
+			pstmt = con.prepareStatement("insert into newsagentdb.customerdetails (name,address,phoneNo,publication) values (?, ?, ?,?)");
+			pstmt.setString(1, custObj.getName());
+			pstmt.setString(2, custObj.getAddress());
+			pstmt.setString(3, custObj.getPhoneNumber());
+			pstmt.setString(4, custObj.getPublication());
 			pstmt.executeUpdate();
 		
 	 
@@ -72,7 +73,7 @@ public class MySQLAccess{
 	
 		try {
 			stmt = con.createStatement();
-			rs = stmt.executeQuery("Select * from newsagentdb.customer");
+			rs = stmt.executeQuery("Select * from newsagentdb.customerdetails");
 		
 		}
 		catch (Exception e) {
@@ -81,19 +82,25 @@ public class MySQLAccess{
 		return rs;
 	}
 	
-	public boolean updateCustomerById(int custId) {
+	public boolean updateCustomerById(String updateCustId, String name, String address, String phoneNum, String pub) {
 		
 		boolean updateSuccessful = true;
 		
-		//Add Code here to call embedded SQL to insert Customer into DB
+		//Add Code here to call embedded SQL to update Customer into DB
 		try {
 			//Create prepared statement to issue SQL query to the database
-			pstmt = con.prepareStatement("update from newsagentdb.customer where id = " + custId);
+			pstmt = con.prepareStatement("update newsagentdb.customerdetails set name=?, address=?, phoneNo=?, publication=? where cus_id = ?");
+			pstmt.setString(1, name);
+			pstmt.setString(2, address);
+			pstmt.setString(3, phoneNum);
+			pstmt.setString(4, pub);
+			pstmt.setString(5, updateCustId);
 			pstmt.executeUpdate();
 		 
 		}
 		catch (Exception e) {
 			updateSuccessful = false;
+			e.printStackTrace();
 		}
 		
 		return updateSuccessful;
@@ -110,11 +117,11 @@ public class MySQLAccess{
 			//Create prepared statement to issue SQL query to the database
 			if (custID == -99)
 				//Delete all entries in Table
-				pstmt = con.prepareStatement("delete from newsagentdb.customer");
+				pstmt = con.prepareStatement("delete from newsagentdb.customerdetails");
 			else
 				//Delete a particular Customer
-				pstmt = con.prepareStatement("delete from newsagentdb.customer where id = " + custID);
-			pstmt.executeUpdate();
+				pstmt = con.prepareStatement("delete from newsagentdb.customerdetails where cus_id = " + custID);
+				pstmt.executeUpdate();
 		 
 		}
 		catch (Exception e) {
@@ -124,5 +131,30 @@ public class MySQLAccess{
 		return deleteSucessfull;
 	
 	}
+	
+    public boolean validateId(String id) {
+        // SQL query to check the id 
+        String query = "SELECT cus_id FROM customerdetails";
+        boolean res = false;
+        try{
+        	PreparedStatement statement = con.prepareStatement(query);
+            // Executing the query
+            ResultSet rs = statement.executeQuery();
+
+            // Checking if the user exists
+            while(rs.next()) {
+            	String dbId = rs.getString("cus_id");
+            	if (dbId.equals(id)) {
+            		res = true;
+            		break;
+            	}
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return res;
+    }
 
 }

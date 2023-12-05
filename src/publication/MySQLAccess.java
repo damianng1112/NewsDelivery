@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class MySQLAccess {
@@ -14,9 +15,9 @@ public class MySQLAccess {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	
-	final private String host ="localhost:3307";
+	final private String host ="localhost:3306";
 	final private String user = "root";
-	final private String password = "123";
+	final private String password = "";
 	
 	
 	public MySQLAccess() throws Exception {
@@ -75,6 +76,22 @@ public class MySQLAccess {
 		return resultSet;
 	}
 	
+	 public boolean updatePublication(String pub_id, String NewName, Double newPrice) throws Exception {
+		 	boolean updateSuccessful = true;
+	        String query = "UPDATE publication SET  pub_name = ?, price = ? WHERE pub_id = ?";
+	        try{
+	        	PreparedStatement statement = connect.prepareStatement(query);
+	        	statement.setString(1, NewName);
+	        	statement.setDouble(2, newPrice);
+	        	statement.setString(3, pub_id);
+
+	            statement.executeUpdate();
+	        }catch(Exception e) {
+	        	updateSuccessful = false;
+	        }
+	        return updateSuccessful;
+	    }
+	
 	public boolean deletePublicationById(String publicationID) {
 
 		boolean deleteSucessfull = true;
@@ -100,6 +117,31 @@ public class MySQLAccess {
 		return deleteSucessfull;
 		
 	}
+	
+	public boolean validateId(String id) {
+        // SQL query to check the id 
+        String query = "SELECT pub_id FROM publication";
+        boolean res = false;
+        try{
+        	PreparedStatement statement = connect.prepareStatement(query);
+            // Executing the query
+            ResultSet rs = statement.executeQuery();
+
+            // Checking if the user exists
+            while(rs.next()) {
+            	String dbId = rs.getString("pub_id");
+            	if (dbId.equals(id)) {
+            		res = true;
+            		break;
+            	}
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return res;
+    }
 
 
 }// end Class

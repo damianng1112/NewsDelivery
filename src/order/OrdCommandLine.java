@@ -55,6 +55,7 @@ public class OrdCommandLine {
 		try {
 			
 			MySQLAccess dao = new MySQLAccess();
+			customer.MySQLAccess cusDAO = new customer.MySQLAccess();
 		
 			// Configure System for Running
 			Scanner keyboard = new Scanner(System.in); 
@@ -73,23 +74,27 @@ public class OrdCommandLine {
 					//Get Customer Details from the User
 					System.out.printf("Enter Customer Id: \n");
 					String custId = keyboard.next();
-					System.out.printf("Enter Customer Name: \n");
-					String custName = keyboard.next();
-					System.out.printf("Enter Customer Address: \n");
-					String custAddr = keyboard.next();	
-					System.out.printf("Enter Customer PhoneNumber: \n");
-					String custphoneNumber = keyboard.next();				
-					System.out.printf("Enter Customer Publication: \n");
-					String custPub = keyboard.next();
+					if (cusDAO.validateId(custId)) {
+						System.out.printf("Enter Date of Order (yyyy-mm-dd): \n");
+						String date = keyboard.next();
+						ResultSet rs = cusDAO.readCustomerById(custId);
+						while(rs.next()) {
+							String custName = rs.getString("name");
+							String custAddr = rs.getString("address");
+							String custPhoneNumber = rs.getString("phoneNo");
+							String custPub = rs.getString("publication");
+							Order OrdObj = new Order(custId,custName,custAddr,custPhoneNumber, custPub, date);
+							//Insert Order Details into the database
+							boolean insertResult = dao.insertOrderDetails(OrdObj);
+							if (insertResult == true)
+								System.out.println("Customer Order Saved");
+							else 
+								System.out.println("ERROR: Customer Order NOT Saved");
+						}
+					}else {
+						System.out.println("Customer Id don't exist");
+					}
 					
-					Order OrdObj = new Order(custId,custName,custAddr,custphoneNumber, custPub);
-				
-					//Insert Order Details into the database
-					boolean insertResult = dao.insertOrderDetails(OrdObj);
-					if (insertResult == true)
-						System.out.println("Customer Details Saved");
-					else 
-						System.out.println("ERROR: Customer Details NOT Saved");
 					break;
 					
 				case "2": 
@@ -110,12 +115,30 @@ public class OrdCommandLine {
 					//Update Order Record by ID
 					System.out.println("Enter Order Id to be updated");
 					String updateOrdId = keyboard.next();
-					boolean updateResult = dao.updateOrderById(Integer.parseInt(updateOrdId));
-					if (updateResult==true)
-						System.out.println("Order Updated");
-					else 
-						System.out.println("ERROR: Order Details NOT updated or Do Not Exist");
+					if (validateId(updateOrdId)) {
+						System.out.printf("Enter Customer Id to be entered to order: \n");
+						String updateCustId = keyboard.next();
+						if (cusDAO.validateId(updateCustId)) {
+							System.out.printf("Enter Date of Order (yyyy-mm-dd): \n");
+							String date = keyboard.next();
+							ResultSet rs = cusDAO.readCustomerById(updateCustId);
+							while(rs.next()) {
+								String custName = rs.getString("name");
+								String custAddr = rs.getString("address");
+								String custPhoneNumber = rs.getString("phoneNo");
+								String custPub = rs.getString("publication");
+								Order updateOrdObj = new Order(updateCustId,custName,custAddr,custPhoneNumber, custPub, date);
+								boolean updateResult = dao.updateOrderById(updateOrdObj, updateOrdId);
+								if (updateResult==true)
+									System.out.println("Order Updated");
+								else 
+									System.out.println("ERROR: Order Details NOT updated or Do Not Exist");
+							}
+						}
+					
+					}
 					break;
+
 					
 				case "4":
 					//Delete Order Record by ID
@@ -153,6 +176,11 @@ public class OrdCommandLine {
 
 	} // end main
 	
+	private static boolean validateId(String updateOrdId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	public static void main (String[] args) {
 		show();
 	}

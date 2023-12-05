@@ -21,7 +21,7 @@ public class PublicationCommandLine {
 	}
 
 	
-	private static boolean printPublicationTable(ResultSet rs) throws Exception {
+	public static boolean printPublicationTable(ResultSet rs) throws Exception {
 		
 		//Print The Contents of the Full Customer Table
 		

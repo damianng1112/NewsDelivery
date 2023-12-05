@@ -1,27 +1,48 @@
 package order;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import java.math.BigInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import newsAgent.NewsAgentExceptionHandler;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Order {
-	private int ord_id;
+	private String ord_id;
 	private String cus_id;
 	private String cus_name;
 	private String cus_number;
 	private String cus_address;
 	private String publication;
+	private String date;
 	
-	public Order(String cus_id, String cus_name, String cus_address, String cus_number, String publication) throws OrderExceptionHandler {
+	public Order(String ord_id, String cus_id, String cus_name, String cus_address, String cus_number, String publication, String date) throws OrderExceptionHandler {
 		try {
 			validateCusName(cus_name);
 			validateCusNumber(cus_number);
 			validateCusAddress(cus_address);
 			validatePublication(publication);
+			validateDate(date);
+		}catch(OrderExceptionHandler e) {
+			throw e;
+		}
+		this.ord_id=ord_id;
+		this.cus_id=cus_id;
+		this.cus_name=cus_name;
+		this.cus_number=cus_number;
+		this.cus_address=cus_address;
+		this.publication=publication;
+		this.date=date;
+	}
+	
+	public Order(String cus_id, String cus_name, String cus_address, String cus_number, String publication, String date) throws OrderExceptionHandler {
+		try {
+			validateCusName(cus_name);
+			validateCusNumber(cus_number);
+			validateCusAddress(cus_address);
+			validatePublication(publication);
+			validateDate(date);
 		}catch(OrderExceptionHandler e) {
 			throw e;
 		}
@@ -30,13 +51,14 @@ public class Order {
 		this.cus_number=cus_number;
 		this.cus_address=cus_address;
 		this.publication=publication;
+		this.date=date;
 	}
 
-	public int getOrd_id() {
+	public String getOrd_id() {
 		return ord_id;
 	}
 
-	public void setOrd_id(int ord_id) {
+	public void setOrd_id(String ord_id) {
 		this.ord_id = ord_id;
 	}
 
@@ -80,6 +102,14 @@ public class Order {
 		this.publication = publication;
 	}
 	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	public static boolean containsNumber(String n) {
         Pattern pattern = Pattern.compile(".*\\d.*");
         Matcher matcher = pattern.matcher(n);
@@ -138,25 +168,26 @@ public class Order {
 		else if (publication.length() > 25)
 			throw new OrderExceptionHandler("Publication exceeds maximum length requirements");
 	}
-=======
-public class Order {
-	private int ord_id;
-	private int cus_id;
-	private String cus_name;
-	private String cus_address;
-	private String cus_number;
-	private String publication;
-=======
-public class Order {
->>>>>>> FaithfulBranch
 	
-	public void createOrder() {
-		System.out.println("new model");
-	}
+	public static boolean isValidDate(String date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);  // Ensure strict validation
+
+        try {
+            // Parse the date to check its validity
+            Date parsedDate = dateFormat.parse(date);
+            return true;
+        } catch (ParseException e) {
+            // If parsing fails, the date is invalid
+            return false;
+        }
+    }
 	
-<<<<<<< HEAD
->>>>>>> main
-=======
->>>>>>> FaithfulBranch
-	
+	public static void validateDate(String date) throws OrderExceptionHandler {
+        if (date.isBlank() || date.isEmpty()) {
+            throw new OrderExceptionHandler("Date NOT specified");
+        } else if (!isValidDate(date)) {
+            throw new OrderExceptionHandler("Invalid date format. Please use yyyy-MM-dd");
+        }
+    }
 }
