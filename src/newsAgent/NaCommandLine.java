@@ -7,6 +7,7 @@ import java.util.Scanner;
 import customer.Customer;
 import publication.Publication;
 import publication.PublicationCommandLine;
+import order.*;
 
 import deliveryPerson.*;
 
@@ -29,6 +30,7 @@ private static void listNewsAgentFuctionalityAvailable() {
 		System.out.println("7. Update Publication");
 		System.out.println("8. Delete Publication");
 		System.out.println("9. CRUD DeliveryPerson");	 
+		System.out.println("10. CRUD Order");	 
 		System.out.println("99.Close the NewsAgent Application");
 		System.out.println("=============================================");
 		System.out.println(" ");
@@ -259,7 +261,10 @@ public static void show() {
 				break;
 			case"9":
 				deliveryPerson.DeliveryPersonCommandLine.DeliveryPerson();
-				break;				
+				break;
+			case"10":
+				order.OrdCommandLine.show();
+				break;
 			case "99":
 				keepAppOpen = false;
 				break;
@@ -271,8 +276,6 @@ public static void show() {
 	
 		}// end while
 	
-		//Tidy up Resources
-		keyboard.close();
 	
 	}
 

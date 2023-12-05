@@ -15,9 +15,9 @@ public class MySQLAccess {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	
-	final private String host ="localhost:3306";
+	final private String host ="localhost:3307";
 	final private String user = "root";
-	final private String password = "";
+	final private String password = "123";
 	
 	
 	public MySQLAccess() throws Exception {
@@ -167,6 +167,26 @@ public class MySQLAccess {
 
         return res;
     }
+	
+	public Double getPubPriceByName(String n) {
+	    Double p = 0.0;
+	    String query = "SELECT price FROM newsagentdb.publication WHERE pub_name = ?";
+	    try {
+	        PreparedStatement statement = connect.prepareStatement(query);
+	        statement.setString(1, n);  // Set the parameter using setString
+
+	        ResultSet rs = statement.executeQuery();
+	        while (rs.next()) {
+	            p = rs.getDouble("price");
+	            return p;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();  // Handle the exception appropriately
+	    }
+	    return p;
+	}
+
+		
 
 
 }// end Class

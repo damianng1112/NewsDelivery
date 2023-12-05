@@ -179,7 +179,7 @@ public class MySQLAccess {
 	    }
 	    
 	    public ResultSet readCustomerById(String id) throws SQLException {
-	        String query = "SELECT * FROM customerdetails where id = "+id;
+	        String query = "SELECT * FROM customerdetails where cus_id = "+id;
 	        try {
 	        	Statement statement = connection.createStatement();
 	            ResultSet resultSet = statement.executeQuery(query);

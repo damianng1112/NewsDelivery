@@ -1,8 +1,10 @@
 package order;
 
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.sql.ResultSet;
 import java.util.Scanner;
+import publication.*;
 
 public class OrdCommandLine {
 	
@@ -17,6 +19,7 @@ public class OrdCommandLine {
 		System.out.println("2. View ALL Order Records");
 		System.out.println("3. Update Order Records");		
 		System.out.println("4. Delete Order Record by ID");
+		System.out.println("5. Print Customer Outstanding Payments");
 		System.out.println("99.Close the NewsAgent Application");
 		System.out.println("=============================================");
 		System.out.println(" ");
@@ -57,6 +60,7 @@ public class OrdCommandLine {
 			
 			MySQLAccess dao = new MySQLAccess();
 			customer.MySQLAccess cusDAO = new customer.MySQLAccess();
+			publication.MySQLAccess pubDAO = new publication.MySQLAccess();
 		
 			// Configure System for Running
 			Scanner keyboard = new Scanner(System.in); 
@@ -155,6 +159,37 @@ public class OrdCommandLine {
 					else 
 						System.out.println("ERROR: Order Details NOT Deleted or Do Not Exist");
 					break;
+					
+				case "5":
+					//Print outstanding payments
+					System.out.println("Enter Order Id to be calculated");
+					String ordIdPay = keyboard.next();
+					if(dao.validateId(ordIdPay)) {
+						ResultSet rsPay = dao.readOrderById(ordIdPay);
+						while(rsPay.next()) {
+							String date = rsPay.getString("date");
+							String pubName = rsPay.getString("publication");
+							Double pubPrice = pubDAO.getPubPriceByName(pubName);
+							// Convert the order date string to LocalDate
+			                   LocalDate orderDate = LocalDate.parse(date);
+
+			                // Get today's date
+			                LocalDate today = LocalDate.now();
+
+			                // Calculate the difference in days
+			                long daysDifference = java.time.temporal.ChronoUnit.DAYS.between(orderDate, today);
+
+			                // Assuming your Publication class has a getPrice() method
+			                double totalPayment = daysDifference * pubPrice;
+			                System.out.println("Number of days since order: " + daysDifference);
+			                System.out.println("Price of Publication: $" + pubPrice);
+			                System.out.println("Outstanding payment for customer "+rsPay.getString("cus_name")+" is: $"+totalPayment);
+							
+						}
+					}else {
+						System.out.println("Order Id don't exist");
+					}
+					break;
 			
 				case "99":
 					keepAppOpen = false;
@@ -167,8 +202,6 @@ public class OrdCommandLine {
 		
 			}// end while
 		
-			//Tidy up Resources
-			keyboard.close();
 		
 		}
 
@@ -178,11 +211,6 @@ public class OrdCommandLine {
 		
 
 	} // end main
-	
-	private static boolean validateId(String updateOrdId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public static void main (String[] args) {
 		show();
