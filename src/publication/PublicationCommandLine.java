@@ -39,12 +39,10 @@ public class PublicationCommandLine {
 			int id = rs.getInt("pub_id");
 			String name = rs.getString("pub_name");
 			double price = rs.getDouble("price");
-			String schedule = rs.getString("schedule");
 			
 			System.out.printf("%30s", id);
 			System.out.printf("%30s", name);
 			System.out.printf("%30s", price);
-			System.out.printf("%30s", schedule);
 			System.out.println();
 		}// end while
 		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");

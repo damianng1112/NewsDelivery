@@ -163,9 +163,9 @@ public class Order {
 	public static void validatePublication(String publication) throws OrderExceptionHandler {
 		if (publication.isBlank() || publication.isEmpty())
 			throw new OrderExceptionHandler("Publication NOT specified");
-		else if (publication.length() < 8)
+		else if (publication.length() < 5)
 			throw new OrderExceptionHandler("Publication does not meet minimum length requirements");
-		else if (publication.length() > 25)
+		else if (publication.length() > 40)
 			throw new OrderExceptionHandler("Publication exceeds maximum length requirements");
 	}
 	

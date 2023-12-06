@@ -1,5 +1,9 @@
 /User/
-/order/
-/newsAgent/
-/publication/
+/admin/
 /customer/
+/deliveryDocket/
+/deliveryPerson/
+/invoice/
+/newsAgent/
+/order/
+/publication/

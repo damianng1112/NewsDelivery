@@ -75,6 +75,7 @@ public class Customer {
         else if (name.length() < 2 || name.length() > 20)
             throw new CustomerExceptionHandler("Customer Name does not meet length requirements");
     }
+    
 
     public static void validateCustomerAddress(String address) throws CustomerExceptionHandler {
         
