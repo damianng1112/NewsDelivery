@@ -25,7 +25,11 @@ public class PublicationCommandLine {
 	}
 
 	
+<<<<<<< HEAD
 	public static boolean printPublicationTable(ResultSet rs) throws Exception {
+=======
+	private static boolean printPublicationTable(ResultSet rs) throws Exception {
+>>>>>>> WeiBranch
 		
 		//Print The Contents of the Full Customer Table
 		
@@ -39,10 +43,18 @@ public class PublicationCommandLine {
 			int id = rs.getInt("pub_id");
 			String name = rs.getString("pub_name");
 			double price = rs.getDouble("price");
+<<<<<<< HEAD
+=======
+			String schedule = rs.getString("schedule");
+>>>>>>> WeiBranch
 			
 			System.out.printf("%30s", id);
 			System.out.printf("%30s", name);
 			System.out.printf("%30s", price);
+<<<<<<< HEAD
+=======
+			System.out.printf("%30s", schedule);
+>>>>>>> WeiBranch
 			System.out.println();
 		}// end while
 		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
@@ -105,7 +117,11 @@ public class PublicationCommandLine {
 		            break;
 				case "3":
 					System.out.println("Enter Publication Id:");
+<<<<<<< HEAD
 		            String id = keyboard.next();
+=======
+		            int id = keyboard.nextInt();
+>>>>>>> WeiBranch
 		            
 					System.out.println("Enter Publication Name:");
 		            String newName = keyboard.next();
@@ -113,10 +129,18 @@ public class PublicationCommandLine {
 		            System.out.println("Enter price:");
 		            double newPrice = keyboard.nextDouble();
 		            
+<<<<<<< HEAD
 		          
 		            try {
 		            	MySQLAccess UmySQLAccess = new MySQLAccess();
 		            	UmySQLAccess.updatePublication(id, newName,newPrice);
+=======
+		            System.out.println("Enter Schedule:");
+		            String newSchedule = keyboard.next();
+		            try {
+		            	MySQLAccess UmySQLAccess = new MySQLAccess();
+		            	UmySQLAccess.updatePublication(id, newName,newPrice,newSchedule);
+>>>>>>> WeiBranch
 		                System.out.println("publication update successfully!");
 		            } catch (SQLException e) {
 		                System.out.println("Error occurred while updateing Publication: " + e.getMessage());
@@ -124,7 +148,11 @@ public class PublicationCommandLine {
 		            break;
 				case "4":
 					System.out.println("Enter Publication id to delete:");
+<<<<<<< HEAD
 		            String pub_id = keyboard.next();
+=======
+		            int pub_id = keyboard.nextInt();
+>>>>>>> WeiBranch
 
 		            try {
 		            	MySQLAccess DmySQLAccess = new MySQLAccess(); 

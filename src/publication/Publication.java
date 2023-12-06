@@ -11,11 +11,14 @@ public class Publication {
         this.schedule = schedule;
     }
     
+<<<<<<< HEAD
     public Publication(String publicationName, double price ) {
         this.publicationName = publicationName;
         this.price = price;
     }
     
+=======
+>>>>>>> WeiBranch
     public void setPublicationName(String publicationName) {
         this.publicationName = publicationName;
     }
