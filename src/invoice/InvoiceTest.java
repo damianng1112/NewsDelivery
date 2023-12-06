@@ -6,17 +6,17 @@ import junit.framework.TestCase;
 class InvoiceTest extends TestCase{
 	//Test #: 1
 	//Test Objective: To create an invoice
-	//Inputs: price = "1000" customername = "Man1", publication = "Publication1",address = "Athlone",number="087123456"
-	//Expected Output: Invoice Object created with price = 1000.0, customername = "Man1", publication = "Publication1",address = "Athlone",number="087123456"
+	//Inputs: price = "1000" cus_id = 1, pub_id=1
+	//Expected Output: Invoice Object created with price = 1000.0, cus_id = 1,pub_id=1
 	@Test
 	public void testValidInvoice001() {
+		// Create the Invoice Object
 		try {
-			Invoice invoice = new Invoice("1000","Man1","Publication1","Athlone","087123456");
+			Invoice invoice = new Invoice("1000",1,1);
+			// Call method under test
 			assertEquals(1000.0,invoice.getPrice());
-			assertEquals(1000.0,invoice.getCustomerName());
-			assertEquals(1000.0,invoice.getPublication());
-			assertEquals(1000.0,invoice.getAddress());
-			assertEquals(1000.0,invoice.getNumber());
+			assertEquals(1,invoice.getCus_id());
+			assertEquals(1,invoice.getPub_id());
 		}catch(Exception e){
 			fail("Exception not expected");
 		}
@@ -36,63 +36,103 @@ class InvoiceTest extends TestCase{
 			}
 			
 		}
-	//Test #: 3
+		//Test #: 3
+		//Test Objective: To test if days is negative
+		//Inputs: days=-1
+		//Expected Output: invalid days input
+			@Test
+			public void testValid30Days002() {
+				try {
+					Invoice.valid30Days(-1);
+					fail("Exception Expected");
+				}catch(Exception e){
+					assertEquals("invalid days input", e.getMessage());
+				}
+				
+			}
+	//Test #: 4
 	//Test Objective: To test if the price is valid
-	//Inputs: price=0
+	//Inputs: price="0"
 	//Expected Output: price can not be 0 or lower
 		@Test
 		public void testValidPrice001() {
 			try {
-				Invoice.validPrice(0);
+				Invoice.validPrice("0");
 				fail("Exception Expected");
 			}catch(Exception e){
 				assertEquals("price can not be 0 or lower", e.getMessage());
 			}
 					
 		}
-	//Test #: 4
-	//Test Objective: To test if the customer name is valid
-	//Inputs: name = ""
-	//Expected Output: can not set name to null
+		//Test #: 5
+		//Test Objective: To test if the price is valid
+		//Inputs: price=""
+		//Expected Output: price can not be null
+			@Test
+			public void testValidPrice002() {
+				try {
+					Invoice.validPrice("");
+					fail("Exception Expected");
+				}catch(Exception e){
+					assertEquals("price can not be null", e.getMessage());
+				}
+						
+			}
+	//Test #: 6
+	//Test Objective: To test if the customer id is valid
+	//Inputs: cus_id = null
+	//Expected Output: can not set id to null
 		@Test
-		public void testValidCustomerName001() {
+		public void testValidCus_id001() {
 			try {
-				Invoice.validCustomerName("");
+				Invoice.validCus_id(null);
 				fail("Exception Expected");
 			}catch(Exception e){
-				assertEquals("can not set name to null", e.getMessage());
+				assertEquals("can not set id to null", e.getMessage());
 			}
 					
 		}
-	
-	//Test #: 5
-	//Test Objective: To test if the address is valid
-	//Inputs: address = ""
-	//Expected Output: can not set address to null
-		@Test
-		public void testValidAddress001() {
-			try {
-				Invoice.validCustomerName("");
-				fail("Exception Expected");
-			}catch(Exception e){
-				assertEquals("can not set address to null", e.getMessage());
-			}
+		//Test #: 6
+		//Test Objective: To test if the customer id is valid
+		//Inputs: cus_id = -1
+		//Expected Output: invalid customer id
+			@Test
+			public void testValidCus_id002() {
+				try {
+					Invoice.validCus_id(-1);
+					fail("Exception Expected");
+				}catch(Exception e){
+					assertEquals("invalid customer id", e.getMessage());
+				}
 						
-		}
+			}
 	
-	//Test #: 6
-	//Test Objective: To test if the phone number is valid
-	//Inputs: number = "123456"
-	//Expected Output: invalid phone number length
+	//Test #: 7
+	//Test Objective: To test if the publication id is valid
+	//Inputs: pub_id = null
+	//Expected Output: can not set publication id to null
 		@Test
-		public void testValidPhoneNumber001() {
+		public void testValidPub_id001() {
 			try {
-				Invoice.validCustomerName("123456");
+				Invoice.validPub_id(null);
 				fail("Exception Expected");
 			}catch(Exception e){
-				assertEquals("invalid phone number length", e.getMessage());
+				assertEquals("can not set publication id to null", e.getMessage());
 			}
 							
 		}
-
+		//Test #: 8
+		//Test Objective: To test if the publication id is valid
+		//Inputs: pub_id = -999
+		//Expected Output: can not set publication id to null
+			@Test
+			public void testValidPub_id002() {
+				try {
+					Invoice.validPub_id(-999);
+					fail("Exception Expected");
+				}catch(Exception e){
+					assertEquals("invalid publication input", e.getMessage());
+				}
+								
+			}
 }

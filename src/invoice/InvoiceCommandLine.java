@@ -1,6 +1,8 @@
 package invoice;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 
@@ -14,6 +16,9 @@ public class InvoiceCommandLine {
 		System.out.println("=============================================");
 		System.out.println("Please choose ONE of the following options:");
 		System.out.println("1. View ALL invoice Records");
+		System.out.println("2. create an invoice Record");
+		System.out.println("3. update an invoice Record");
+		System.out.println("4. delete an invoice Record");
 		System.out.println("99. Close the NewsAgent Application");
 		System.out.println("=============================================");
 		System.out.println(" ");
@@ -33,17 +38,13 @@ public class InvoiceCommandLine {
 		System.out.println();
 		while (rs.next()) {
 			int id = rs.getInt("inv_id");
-			String name = rs.getString("cus_name");
-			String addr = rs.getString("cus_address");
-			String phone = rs.getString("cus_number");
-			String publication = rs.getString("publication");
+			int cus_id = rs.getInt("cus_id");
+			int pub_id= rs.getInt("pub_id");
 			String price = rs.getString("price");
 			
 			System.out.printf("%30s", id);
-			System.out.printf("%30s", name);
-			System.out.printf("%30s", addr);
-			System.out.printf("%30s", phone);
-			System.out.printf("%30s", publication);
+			System.out.printf("%30s", cus_id);
+			System.out.printf("%30s", pub_id);
 			System.out.printf("%30s", price);
 			System.out.println();
 		}// end while
@@ -74,7 +75,7 @@ public class InvoiceCommandLine {
 		
 				switch (functionNumber) {				
 				case "1": 
-					//Retrieve ALL Customer Records
+					//Retrieve ALL Invoice Records
 					ResultSet rSet = dao.retrieveAllInvoiceAccounts();
 					if (rSet == null) {
 						System.out.println("No Records Found");
@@ -85,7 +86,57 @@ public class InvoiceCommandLine {
 						if (tablePrinted == true)
 							rSet.close();
 					}
-					break;		
+					break;	
+				case "2":
+		            System.out.println("Enter Customer id:");
+		            int cus_id = keyboard.nextInt();
+		            
+		            System.out.println("Enter Publication id:");
+		            int pub_id = keyboard.nextInt();
+		            
+		            System.out.println("Enter price:");
+		            String price = keyboard.next();
+		            try {
+		            	MySQLAccess CmySQLAccess = new MySQLAccess();
+		            	Invoice invoice = new Invoice(price,pub_id,cus_id);
+		            	CmySQLAccess.insertInvoiceDetailsAccount(invoice);
+		                System.out.println("invoice created successfully!");
+		            } catch (SQLException e) {
+		                System.out.println("Error occurred while creating Invoice: " + e.getMessage());
+		            }
+		            break;
+				case "3":
+					System.out.println("Enter Invoice Id:");
+		            int id = keyboard.nextInt();
+		            
+					System.out.println("Enter Customer Id:");
+		            int newcus_id = keyboard.nextInt();
+		            
+		            System.out.println("Enter Publication Id:");
+		            int newpub_id = keyboard.nextInt();
+		            
+		            System.out.println("Enter price:");
+		            String newPrice = keyboard.next();
+		            try {
+		            	MySQLAccess UmySQLAccess = new MySQLAccess();
+		            	UmySQLAccess.updateInvoice(id, newcus_id,newpub_id,newPrice);
+		                System.out.println("Invoice update successfully!");
+		            } catch (SQLException e) {
+		                System.out.println("Error occurred while updateing Invoice: " + e.getMessage());
+		            }
+		            break;
+				case "4":
+					System.out.println("Enter Invoice id to delete:");
+		            int inv_id = keyboard.nextInt();
+
+		            try {
+		            	MySQLAccess DmySQLAccess = new MySQLAccess(); 
+		                DmySQLAccess.deleteInvoiceById(inv_id);
+		                System.out.println("Invoice deleted successfully!");
+		            } catch (SQLException e) {
+		                System.out.println("Error occurred while deleting Invoice: " + e.getMessage());
+		            }
+		            break;
 				case "99":
 					keepAppOpen = false;
 					System.out.println("Closing the Application");
